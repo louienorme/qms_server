@@ -1,4 +1,4 @@
-# rms_server
+# qms_server
 
 ### How to run
 1. Run `yarn install` or `npm install`
