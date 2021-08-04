@@ -13,8 +13,8 @@ const login = async (req: Request, res: Response) => {
 };
 // Registers the User
 const register = async (req: Request, res: Response) => {
-    let body: Object = req.body;
-    let result: any =  await authService.adminRegister(body);
+    let body = req.body;
+    let result: Object =  await authService.adminRegister(body);
     sendResponse(res, result);
 };
 

@@ -7,7 +7,7 @@ import authRoutes from  './auth/routers';
 
 // Require Database Config and Env
 require('dotenv').config();
-require('./_config/dbConf')();
+require('./_config/dbConfig')();
 
 // Create Server
 const app: Application = express();

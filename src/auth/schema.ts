@@ -4,11 +4,11 @@ import { messageBuilder, cleaner } from '../_util/messages';
 
 const adminId = joi.string()
     .required()
-    .messages(messageBuilder({ field: 'adminId' }));
+    .messages(messageBuilder({ field: 'Admin ID' }));
 
 const roleId = joi.string()
     .required()
-    .messages(messageBuilder({ field: 'roleId' }));
+    .messages(messageBuilder({ field: 'Role ID' }));
 
 const username = joi.string()
     .required()
