@@ -6,18 +6,28 @@ const AdminSchema: Schema = new Schema(
         adminId: {
             type: String
         },
-        roleId: {
+        adminType: {
             type: String
+        },
+        fullName: {
+            firstName: String,
+            middleName: String,
+            lastName: String,
+            nameExtension : String
+        },
+        address: {
+            type: String
+        },
+        contact: {
+            email: String
         },
         username: {
             type: String
         },
-        email: { 
-            type: String
-        },
         password: {
             type: String
-        }
+        },
+        permissions: [{ type: Schema.Types.Mixed }]
     },
     {
         timestamps: true
