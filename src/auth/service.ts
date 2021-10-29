@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import faker from 'faker';
 
 // Models
-import { AdminModel } from '../superAdmin/index';
+import { AdminModel } from '../accounts';
 
 dotenv.config();
 
@@ -20,21 +20,37 @@ class AuthService {
     constructor() {};
 
     async adminRegister(adminInfo: any) {
-         // Find for a duplicate account
-         let isExisting = await AdminModel.find({ email: adminInfo.email });
-         // Return if there is a duplicate
-         if (isExisting.length > 0) return { success: false, message: 'Admin already exist', code: 400 };
-         // Set a default password
-         adminInfo.password = await bscryptjs.hash(process.env.DEFAULT_PASSWORD || 'qms123', 10);
-         // Generate Random ID
-         adminInfo.adminId = `${new Date().getFullYear()}-${faker.datatype.number(99999)}`;
+        // Find for a duplicate account
+        let isExisting = await AdminModel.find({ email: adminInfo.email });
+        // Return if there is a duplicate
+        if (isExisting.length > 0) return { success: false, message: 'Admin already exist', code: 400 };
+        // Set a default password
+        adminInfo.password = await bscryptjs.hash(process.env.DEFAULT_PASSWORD || 'qms123', 10);
+        // Generate Random ID
+        if (adminInfo.type == 'Super') {
+            adminInfo.adminId = 
+                `${new Date().getFullYear()}-${faker.datatype.number(99999)}-SA`;
+        }
+        if (adminInfo.type == 'Queue') {
+            adminInfo.adminId = 
+                `${new Date().getFullYear()}-${faker.datatype.number(99999)}-QA`;
+        }
+        if (adminInfo.type == 'Station') {
+            adminInfo.adminId = 
+                `${new Date().getFullYear()}-${faker.datatype.number(99999)}-StA`;
+        }
+        if (adminInfo.type == 'Window') {
+            adminInfo.adminId = 
+                `${new Date().getFullYear()}-${faker.datatype.number(99999)}-WA`;
+        }
+s
         try {
-            const newUser = new AdminModel(adminInfo);
-            await newUser.save();
-            return { success: true, data: newUser, code: 201, message: 'Registration Successful' };
+            const newAdmin = new AdminModel(adminInfo);
+            await newAdmin.save();
+            return { success: true, data: newAdmin, code: 201, message: 'Account Creation Successful' };
 
         } catch (error) {
-            return { success: false, message: 'Registration Failed', deepLog: error, code: 400 };
+            return { success: false, message: 'Account Creation Failed', deepLog: error, code: 400 };
         }
     }
 
