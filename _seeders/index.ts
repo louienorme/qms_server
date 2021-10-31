@@ -1,5 +1,10 @@
+import dotenv from 'dotenv'
+
+dotenv.config();
+
 import AdminModel from  '../src/accounts/admin/model'
 import AdministratorAccountSeed from './accounts/administrator';
+import connectToDatabase from '../src/_config/dbConnect';
 
 /** Clears the Database Collection */
 export async function clearAccounts(): Promise<void> {
@@ -18,7 +23,26 @@ export async function seedAccounts() {
 
 /**  */
 export async function seed(safe: boolean): Promise<void> {
+    console.log(process.env.DB_USER);
     try {
-        
+        if (await connectToDatabase()) {
+            
+            if(!safe) {
+                await clearAccounts();
+
+                await seedAccounts();
+            }
+
+            console.log('\n\nSeeding Success!')
+        } else {
+            console.log(
+				"Seeding unsuccessful. Failed to connect to the database. [ERROR_DB_CONNECTION]"
+			);
+        }
+
+        process.exit(0);
+    } catch (err) {
+        console.log(err);
+        process.exit(1);
     }
 }

@@ -37,13 +37,13 @@ class AuthService {
         }
         if (adminInfo.type == 'Station') {
             adminInfo.adminId = 
-                `${new Date().getFullYear()}-${faker.datatype.number(99999)}-StA`;
+                `${new Date().getFullYear()}-${faker.datatype.number(99999)}-STA`;
         }
         if (adminInfo.type == 'Window') {
             adminInfo.adminId = 
                 `${new Date().getFullYear()}-${faker.datatype.number(99999)}-WA`;
         }
-s
+
         try {
             const newAdmin = new AdminModel(adminInfo);
             await newAdmin.save();

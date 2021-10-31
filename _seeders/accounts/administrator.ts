@@ -8,18 +8,20 @@ export const AdministratorAccountSeed = async (): Promise<void> => {
     const password = await bcryptjs.hash(process.env.DEFAULT_PASSWORD || 'DEVSCRUM', 10);
 
     const adminTypes = ['Super', 'Queue', 'Station', 'Window'];
+    const adminId = ['SA', 'QA', 'STA', 'WA']
 
     const adminAccounts = [];
 
     for (let i = 0; i < adminTypes.length; i++) {
         const admins = new AdminModel({
-            adminId: faker.datatype.number(99999),
+            adminId: `${new Date().getFullYear()}-00000-${adminId[i]}`,
             fullName: {
                 firstName: faker.name.firstName(),
                 middleName: faker.name.middleName(),
                 lastName: faker.name.lastName(),
                 nameExtension: faker.name.suffix()
             },
+            adminType: adminTypes[i],
             address: faker.address.secondaryAddress(),
             contact: faker.phone.phoneNumber(),
             username: faker.internet.userName(),
