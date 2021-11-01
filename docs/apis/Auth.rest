@@ -1,0 +1,11 @@
+------------------------
+
+Admin Login Route
+
+POST localhost:5000/api/auth/login
+Content-type: application/json
+Body: {
+    "username" : "ArchonSA",
+    "password" : "queue123"
+}
+// This account is a Super Admin Account

@@ -66,20 +66,22 @@ class AuthService {
         if (!isMatch) return { success: false, message: 'Invalid Credentials', code: 400 };
 
         try {
+
+            let adminObject = {
+                _id: admin._id,
+                adminId: admin.adminId,
+                username: admin.username,
+                type: admin.type,
+                permissions: admin.permissions
+            }
+            
             const token = jwt.sign(
-                {
-                    _id: admin._id,
-                    adminId: admin.adminId,
-                }, 
+                adminObject,
                 process.env.JWT_ACCESS_SECRET || 'helloworld', 
                 { expiresIn: process.env.JWT_ACCESS_DURATION }
                 );
-            
-            let adminToken: any = await AdminModel.findOne({ username: adminInfo.username }, { password: 0 });
-            let bearer = `Bearer ${token}`;
-            let loginRes = { bearer, ...adminToken };
 
-            return { success: true, data: loginRes, code: 201, message: 'Login Successful' };
+            return { success: true, data: `Bearer ${token}`, code: 201, message: 'Login Successful' };
         } catch (error) {
             return { success: false, message: 'Login Failed', deepLog: error, code: 400 };
         }

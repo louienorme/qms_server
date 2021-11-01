@@ -37,8 +37,6 @@ const mongooseConnector = async (
 export default async function connectToDatabase(): Promise<boolean> {
 	const { DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME } = process.env;
     
-    console.log(process.env['DB_HOST']);
-
 	if (!DB_HOST || !DB_PORT || !DB_USER || !DB_PASS || !DB_NAME) {
 		console.log(DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME);
 		throw new Error(

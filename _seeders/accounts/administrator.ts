@@ -8,7 +8,7 @@ export const AdministratorAccountSeed = async (): Promise<void> => {
     const password = await bcryptjs.hash(process.env.DEFAULT_PASSWORD || 'DEVSCRUM', 10);
 
     const adminTypes = ['Super', 'Queue', 'Station', 'Window'];
-    const adminId = ['SA', 'QA', 'STA', 'WA']
+    const adminId = ['SA', 'QA', 'STA', 'WA'];
 
     const adminAccounts = [];
 
@@ -24,7 +24,7 @@ export const AdministratorAccountSeed = async (): Promise<void> => {
             adminType: adminTypes[i],
             address: faker.address.secondaryAddress(),
             contact: faker.phone.phoneNumber(),
-            username: faker.internet.userName(),
+            username: `Archon${adminId[i]}`,
             password: password,
             permissions : []
         })
