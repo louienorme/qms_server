@@ -6,10 +6,6 @@ const adminId = joi.string()
     .required()
     .messages(messageBuilder({ field: 'Admin ID' }));
 
-const roleId = joi.string()
-    .required()
-    .messages(messageBuilder({ field: 'Role ID' }));
-
 const username = joi.string()
     .required()
     .messages(messageBuilder({ field: 'Username' }));
