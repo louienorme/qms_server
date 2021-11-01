@@ -1,0 +1,11 @@
+------------------------
+
+Queue Creation Route
+
+POST localhost:5000/api/queue/create
+Content-type: application/json
+Body: {
+    "name" : "Food Orders",
+    "numOfStations" : 3,
+    "adminName" : []
+}

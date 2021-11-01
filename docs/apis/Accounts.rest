@@ -1,0 +1,15 @@
+------------------------
+
+GET ALL Accounts
+
+GET localhost:5000/api/accounts/
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+------------------------
+
+GET Accounts
+
+GET localhost:5000/api/accounts/:type
+Authorization: // Insert Bearer Token
+Content-type: application/json

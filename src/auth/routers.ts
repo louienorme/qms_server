@@ -10,7 +10,7 @@ const router = express.Router();
 
 /**
  * Route to log in a user
- * @param { email, password } req
+ * @param { username, password } req
  *
  */
  router.post('/login', [], authController.login);

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Application } from 'express';
 import http from 'http';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -7,12 +7,13 @@ import dbConnect from './_config/dbConnect';
 
 // Routes
 import authRoutes from  './auth/routers';
+import accountRoutes from './accounts/routers';
 
 // Require Env
 dotenv.config()
 
 // Create Server
-const app = express();
+const app : Application = express();
 const server = http.createServer(app);
 
 // Enables to handle json requests
@@ -22,6 +23,7 @@ app.use(morgan("tiny"));
 
 // APIs
 app.use('/api/auth', authRoutes);
+app.use('/api/accounts', accountRoutes);
 
 // Run App
 const port = process.env.PORT || 5000;
@@ -29,7 +31,7 @@ const port = process.env.PORT || 5000;
 const runServer = async () => {
     console.clear();
     console.log(
-        "This is the Queue Management System Backend Server by Enorme, John Loui \n'"
+        "This is the Queue Management System Backend Server by Enorme, John Loui \n"
     );
 
     if (await dbConnect()) {
