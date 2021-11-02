@@ -13,3 +13,19 @@ GET Accounts
 GET localhost:5000/api/accounts/:type
 Authorization: // Insert Bearer Token
 Content-type: application/json
+
+------------------------
+
+CREATE Flashboards Accounts
+
+GET localhost:5000/api/accounts/flashboards/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+------------------------
+
+CREATE Window Accounts
+
+GET localhost:5000/api/accounts/windows/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json

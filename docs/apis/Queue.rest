@@ -1,11 +1,44 @@
 ------------------------
 
-Queue Creation Route
+Queue Creation Step 1
 
-POST localhost:5000/api/queue/create
+POST localhost:5000/api/queue/createStepOne
+Authorization: // Insert Bearer Token
 Content-type: application/json
 Body: {
-    "name" : "Food Orders",
-    "numOfStations" : 3,
-    "adminName" : []
+    'name' : 'name',
+    'numOfStations' : 3,
+    'admin' : []
 }
+
+------------------------
+
+Queue Creation Step 2 
+
+PUT localhost:5000/api/queue/createStepTwo/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+Body: {
+    'stations' : [
+        {
+            '_id' : '',
+            'name': '',
+            'admin' : [],
+            'numOfWindows' : 2
+        },
+        {
+            '_id' : '',
+            'name': '',
+            'admin' : [],
+            'numOfWindows' : 2
+        }
+    ]
+}
+
+------------------------
+
+GET Stations 
+
+GET localhost:5000/api/queue/stations/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
