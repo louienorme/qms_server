@@ -15,6 +15,7 @@ export const AdministratorAccountSeed = async (): Promise<void> => {
     for (let i = 0; i < adminTypes.length; i++) {
         const admins = new AdminModel({
             adminId: `${new Date().getFullYear()}-00000-${adminId[i]}`,
+            status: true,
             fullName: {
                 firstName: faker.name.firstName(),
                 middleName: faker.name.middleName(),
