@@ -13,12 +13,24 @@ const router = express.Router();
  * Route to GET ALL Accounts
  *
  */
- router.get('/', [ authChecker ], accountController.accountsGetAll);
+router.get('/', [ authChecker ], accountController.accountsGetAll);
 
  /**
  * Route to GET Accounts
  *
  */
-  router.get('/:type', [ authChecker ], accountController.accountsGet);
+router.get('/:type', [ authChecker ], accountController.accountsGet);
+
+  /**
+ * Route to Create Flashboard Accounts
+ *
+ */
+router.get('/flashboards/:queueName', [ authChecker ], accountController.createFA);
+
+  /**
+ * Route to Create Window Accounts
+ *
+ */
+router.get('/windows/:queueName', [ authChecker ], accountController.createWA);
 
  export = router;

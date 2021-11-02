@@ -18,4 +18,18 @@ const accountsGet = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-export default { accountsGetAll, accountsGet };
+// CREATE Flashboard Accounts
+const createFA = async ( req: Request, res: Response ) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.createFlashboardAccounts(name);
+    sendResponse(res, result);
+}
+
+// CREATE Window Accounts
+const createWA = async ( req: Request, res: Response ) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.createWindowAccounts(name);
+    sendResponse(res, result);
+}
+
+export default { accountsGetAll, accountsGet, createFA, createWA };
