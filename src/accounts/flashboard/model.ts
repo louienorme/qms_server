@@ -8,7 +8,7 @@ const FlashboardSchema: Schema = new Schema(
         },
         status: {
             type: Boolean
-        }
+        },
         queueName: {
             type: String
         },

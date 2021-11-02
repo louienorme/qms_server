@@ -3,7 +3,8 @@ import { Document } from "mongoose";
 export default interface IWindow extends Document {
     windowId: String,
     queueName: String,
+    stationNumber: Number,
     status: Boolean,
-    windowNumber: String,
+    windowNumber: Number,
     admin: String
 }

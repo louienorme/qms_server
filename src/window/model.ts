@@ -8,12 +8,15 @@ const WindowSchema: Schema = new Schema(
         },
         queueName: {
             type: String
-        }
+        },
+        stationNumber: {
+            type: Number
+        },
         status: {
             type: String
         },
         windowNumber: {
-            type: String
+            type: Number
         },
         admin: {
             type: String

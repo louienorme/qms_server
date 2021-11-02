@@ -9,6 +9,9 @@ const AdminSchema: Schema = new Schema(
         adminType: {
             type: String
         },
+        status: {
+            type: Boolean
+        },
         fullName: {
             firstName: String,
             middleName: String,
