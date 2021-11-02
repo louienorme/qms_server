@@ -9,7 +9,9 @@ const QueueSchema: Schema = new Schema(
         status: {
             type: Boolean
         },
-        stations: [{ type: String }],
+        numOfStations: {
+            type: Number
+        },
         name: {
             type: String
         },

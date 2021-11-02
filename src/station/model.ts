@@ -6,13 +6,18 @@ const StationSchema: Schema = new Schema(
         stationId: {
             type: String
         },
+        queueName: {
+            type: String
+        },
         status: {
             type: Boolean
         },
         stationNumber: {
             type: String
         },
-        windows: [{ type: String }],
+        numOfWindows: {
+            type: Number
+        },
         name: {
             type: String
         },

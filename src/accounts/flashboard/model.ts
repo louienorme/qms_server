@@ -6,6 +6,12 @@ const FlashboardSchema: Schema = new Schema(
         flashboardId : {
             type: String
         },
+        status: {
+            type: Boolean
+        }
+        queueName: {
+            type: String
+        },
         station: {
             type: String
         },

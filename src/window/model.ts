@@ -6,6 +6,9 @@ const WindowSchema: Schema = new Schema(
         windowId: {
             type: String
         },
+        queueName: {
+            type: String
+        }
         status: {
             type: String
         },
