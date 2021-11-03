@@ -37,8 +37,40 @@ Body: {
 
 ------------------------
 
+PUT localhost:5000/api/queue/createStepThree/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+------------------------
+
+GET ALL Queues
+
+GET localhost:5000/api/queue/
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+------------------------
+
+GET Queue
+
+GET localhost:5000/api/queue/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+
+------------------------
+
 GET Stations 
 
 GET localhost:5000/api/queue/stations/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+
+------------------------
+
+GET Stations 
+
+GET localhost:5000/api/queue/windows/:queueName
 Authorization: // Insert Bearer Token
 Content-type: application/json

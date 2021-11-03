@@ -99,6 +99,38 @@ class QueueService {
             return { success: false, message: 'Queue Creation Step 3 Failed', deepLog: err, code: 400 }
         }
     }
+
+    async getAllQueues() {
+        // Check if there are queues created
+        let isExisting = await QueueModel.find();
+        // Return if none exists
+        if (!isExisting) return { success: true, data: [], code: 200 }
+
+        try {
+            
+            let queues = await QueueModel.find();
+
+            return { success: true, data: queues, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to GET ALL Queues', deepLog: err, code: 400 }
+        }
+    }
+
+    async getQueue(queueName: string) {
+        // Check if there are queues created
+        let isExisting = await QueueModel.findOne({ name: queueName });
+        // Return if none exists
+        if (!isExisting) return { success: true, data: [], code: 200 }
+
+        try {
+            
+            let queue = await QueueModel.findOne({ name: queueName });
+
+            return { success: true, data: queue, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to GET Queue', deepLog: err, code: 400 }
+        }
+    }
     
     async getStations(queueName: string) {
         // Check if there are stations created
@@ -113,6 +145,22 @@ class QueueService {
             return { success: true, data: stations, code: 200 }
         } catch (err) {
             return { success: false, message: 'Failed to GET Stations', deepLog: err, code: 400 }
+        }
+    }
+
+    async getWindows(queueName: string) {
+        // Check if there are windows created
+        let isExisting = await WindowModel.find({ queueName });
+        // Return if none exists
+        if (!isExisting) return { success: true, data: [], code: 200 }
+
+        try {
+            
+            let windows = await WindowModel.find({ queueName });
+
+            return { success: true, data: windows, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to GET Windows', deepLog: err, code: 400 }
         }
     }
 }
