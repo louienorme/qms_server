@@ -1,0 +1,76 @@
+------------------------
+
+Queue Creation Step 1
+
+POST localhost:5000/api/queue/createStepOne
+Authorization: // Insert Bearer Token
+Content-type: application/json
+Body: {
+    'name' : 'name',
+    'numOfStations' : 3,
+    'admin' : []
+}
+
+------------------------
+
+Queue Creation Step 2 
+
+PUT localhost:5000/api/queue/createStepTwo/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+Body: {
+    'stations' : [
+        {
+            '_id' : '',
+            'name': '',
+            'admin' : [],
+            'numOfWindows' : 2
+        },
+        {
+            '_id' : '',
+            'name': '',
+            'admin' : [],
+            'numOfWindows' : 2
+        }
+    ]
+}
+
+------------------------
+
+PUT localhost:5000/api/queue/createStepThree/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+------------------------
+
+GET ALL Queues
+
+GET localhost:5000/api/queue/
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+------------------------
+
+GET Queue
+
+GET localhost:5000/api/queue/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+
+------------------------
+
+GET Stations 
+
+GET localhost:5000/api/queue/stations/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+
+------------------------
+
+GET Windows 
+
+GET localhost:5000/api/queue/windows/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json

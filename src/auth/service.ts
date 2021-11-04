@@ -45,7 +45,7 @@ class AuthService {
         }
 
         try {
-            const newAdmin = new AdminModel(adminInfo);
+            const newAdmin = new AdminModel({ ...adminInfo, status: true });
             await newAdmin.save();
             return { success: true, data: newAdmin, code: 201, message: 'Account Creation Successful' };
 
