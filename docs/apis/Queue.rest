@@ -69,7 +69,7 @@ Content-type: application/json
 
 ------------------------
 
-GET Stations 
+GET Windows 
 
 GET localhost:5000/api/queue/windows/:queueName
 Authorization: // Insert Bearer Token
