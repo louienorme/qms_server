@@ -86,6 +86,7 @@ class QueueService {
                     let count = i + 1
                     let window = new WindowModel({
                         windowId,
+                        stationNumber: station.stationNumber,
                         queueName,
                         status: true,
                         windowNumber: count

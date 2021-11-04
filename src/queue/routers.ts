@@ -51,7 +51,4 @@ router.put('/createStepTwo/:queueName', [ authChecker ], queueController.stepTwo
  */
  router.put('/createStepThree/:queueName', [ authChecker ], queueController.lastStepQueueCreation);
 
-
-
-
-exports = router
+export = router

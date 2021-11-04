@@ -57,8 +57,8 @@ class AccountService {
          if (!isExisting) return { success: false, message: 'No Stations were created', code: 400 }
 
         try {
-
-            let queue: any = await QueueModel.findOne({ queueName });
+            
+            let queue: any = await QueueModel.findOne({ name: queueName });
             let flashboardId = `${new Date().getFullYear()}-${faker.datatype.number(99999)}-FA`;
             let password = await bcryptjs.hash(process.env.DEFAULT_PASSWORD || 'qms123', 10);
 
@@ -99,6 +99,7 @@ class AccountService {
                     let password = await bcryptjs.hash(process.env.DEFAULT_PASSWORD || 'qms123', 10);
                     let window = new AdminModel({
                         adminId: windowId,
+                        adminType: 'Window',
                         username,
                         password
                     })
