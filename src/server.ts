@@ -8,6 +8,7 @@ import dbConnect from './_config/dbConnect';
 // Routes
 import authRoutes from  './auth/routers';
 import accountRoutes from './accounts/routers';
+import queueRoutes from './queue/routers';
 
 // Require Env
 dotenv.config()
@@ -24,6 +25,7 @@ app.use(morgan("tiny"));
 // APIs
 app.use('/api/auth', authRoutes);
 app.use('/api/accounts', accountRoutes);
+app.use('/api/queue', queueRoutes);
 
 // Run App
 const port = process.env.PORT || 5000;
