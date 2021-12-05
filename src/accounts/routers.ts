@@ -32,5 +32,16 @@ router.put('/flashboards/:queueName', [ authChecker ], accountController.createF
  *
  */
 router.put('/windows/:queueName', [ authChecker ], accountController.createWA);
+  /**
+ * Route to Update Flashboard Accounts
+ *
+ */
+router.put('/flashboards/:queueName', [ authChecker ], accountController.updateFA);
+
+  /**
+ * Route to Update Window Accounts
+ *
+ */
+router.put('/windows/:queueName', [ authChecker ], accountController.updateWA);
 
  export = router;

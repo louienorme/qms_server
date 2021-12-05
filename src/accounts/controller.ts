@@ -32,4 +32,18 @@ const createWA = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-export default { accountsGetAll, accountsGet, createFA, createWA };
+// UPDATE Flashboard Accounts
+const updateFA = async ( req: Request, res: Response) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.UpdateFlashboardAccounts(name);
+    sendResponse(res, result);
+}
+
+// UPDATE Window Accounts
+const updateWA = async ( req: Request, res: Response) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.UpdateWindowAccounts(name);
+    sendResponse(res, result);
+}
+
+export default { accountsGetAll, accountsGet, createFA, createWA, updateFA, updateWA };
