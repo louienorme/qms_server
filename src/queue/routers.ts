@@ -43,7 +43,7 @@ router.post('/createStepOne', [ authChecker ], queueController.stepOneQueueCreat
  * Route for Queue Creation Step 2
  * 
  */
-router.put('/createStepTwo/:queueName', [ authChecker ], queueController.stepTwoQueueCreation);
+router.post('/createStepTwo/:queueName', [ authChecker ], queueController.stepTwoQueueCreation);
 
 /**
  * Route for Queue Creation Step 3
