@@ -46,4 +46,19 @@ const updateWA = async ( req: Request, res: Response) => {
     sendResponse(res, result);
 }
 
-export default { accountsGetAll, accountsGet, createFA, createWA, updateFA, updateWA };
+//DELETE Flashboard Accounts
+const deleteFA = async ( req: Request, res: Response) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.DeleteFlashboardAccounts(name);
+    sendResponse(res, result);
+}
+
+// DELETE Window Accounts
+const deleteWA = async ( req: Request, res: Response) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.DeleteWindowAccounts(name);
+    sendResponse(res, result);
+}
+
+
+export default { accountsGetAll, accountsGet, createFA, createWA, updateFA, updateWA, deleteFA, deleteWA };

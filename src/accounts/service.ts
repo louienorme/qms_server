@@ -173,6 +173,57 @@ class AccountService {
         return { success: false, message: 'Failed to UPDATE Window Accounts', deepLog: err, code: 400 }
     }
 }
+
+async DeleteFlashboardAccounts(stationId: string) {
+    // Check if there are stations created
+    let isExisting = await StationModel.find({ stationId });
+    // Return if none exists
+    if (!isExisting) return { success: false, message: 'No Stations were created', code: 400 }
+
+   try {
+       
+       let queue: any = await QueueModel.findOne({ name: stationId });
+
+       for (let i = 0; i < queue.numOfStations; i++) {
+           let count = null
+           let flashboard = new FlashboardModel({
+           })
+           await flashboard.save()
+       }
+
+       return { success: true, message: 'Flashboard Accounts deleted', code: 200 }
+   } catch (err) {
+       return { success: false, message: 'Failed to DELETE Flashboard Accounts', deepLog: err, code: 400 }
+   }
+}    
+
+async DeleteWindowAccounts(windowId: string) {
+    // Check if there is a queue with the same name
+    let isExisting = await QueueModel.findOne({ name: windowId });
+    // Return if its exists 
+    if (!isExisting) return { success: false, message: 'That queue does not exists!', code: 400 }
+
+    try {
+        
+        let stations = await StationModel.find({ windowId });
+
+        stations.forEach(async (station) => {
+            for (let i = 0; i < station.numOfWindows; i++) {
+                let count = null
+                let window = new AdminModel({
+                    adminId: null,
+                    adminType: null,
+                })
+                await window.save();
+            }
+        });
+        
+        return { success: true, message: 'Window Accounts update', code: 200 }
+    } catch (err) {
+        return { success: false, message: 'Failed to UPDATE Window Accounts', deepLog: err, code: 400 }
+    }
+  }
+
 }
 
 export default AccountService;

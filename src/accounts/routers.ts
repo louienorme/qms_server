@@ -44,4 +44,16 @@ router.put('/flashboards/:queueName', [ authChecker ], accountController.updateF
  */
 router.put('/windows/:queueName', [ authChecker ], accountController.updateWA);
 
+  /**
+ * Route to Delete Flashboard Accounts
+ *
+ */
+   router.delete('/flashboards/:stationId', [ authChecker ], accountController.deleteFA);
+
+   /**
+  * Route to Update Window Accounts
+  *
+  */
+ router.delete('/windows/:windowId', [ authChecker ], accountController.deleteWA);
+
  export = router;
