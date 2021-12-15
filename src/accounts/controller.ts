@@ -26,6 +26,14 @@ const accountsUpdate = async (req: Request, res: Response) => {
     sendResponse(res, result);
 }
 
+// DELETE Accounts 
+const accountsDelete = async (req: Request, res: Response) => {
+    let id = req.params.adminId;
+    let body = req.body;
+    let result: any = await accountService.deleteAccounts(id, body);
+    sendResponse(res, result);
+}
+
 // CREATE Flashboard Accounts
 const createFA = async ( req: Request, res: Response ) => {
     let name = req.params.queueName;
@@ -69,4 +77,4 @@ const deleteWA = async ( req: Request, res: Response) => {
 }
 
 
-export default { accountsGetAll, accountsGet, createFA, createWA, updateFA, updateWA, deleteFA, deleteWA, accountsUpdate };
+export default { accountsGetAll, accountsGet, createFA, createWA, updateFA, updateWA, deleteFA, deleteWA, accountsUpdate, accountsDelete };

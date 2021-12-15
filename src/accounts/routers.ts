@@ -21,12 +21,19 @@ router.get('/', [ authChecker ], accountController.accountsGetAll);
  */
 router.get('/:type', [ authChecker ], accountController.accountsGet);
 
-  /**
+ /**
  * Route to Update Accounts
  *
  */
 
 router.put('/update/:adminId', [ authChecker ], accountController.accountsUpdate); 
+
+ /**
+ * Route to Update Accounts
+ *
+ */
+
+router.delete('/delete/:adminId', [ authChecker ], accountController.accountsDelete); 
 
  /**
  * Route to Create Flashboard Accounts
