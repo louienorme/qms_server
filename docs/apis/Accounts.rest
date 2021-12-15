@@ -29,3 +29,12 @@ CREATE Window Accounts
 PUT localhost:5000/api/accounts/windows/:queueName
 Authorization: // Insert Bearer Token
 Content-type: application/json
+
+------------------------
+
+UPDATE Accounts
+
+PUT localhost: 5000/api/accounts/update/:adminId
+Authorization: // Insert Bearer Token
+Content-type: application/json
+

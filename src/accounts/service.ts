@@ -50,6 +50,23 @@ class AccountService {
 
     }
 
+    async updateAccounts(id: string, body: any) {
+        // Find if there is any account that exists
+        let isExisting = await AdminModel.find({ adminId: id })
+        // Return if none exists
+        if (!isExisting) return { success: true, data: [], code: 200 };
+
+        try {
+
+            await AdminModel.findOneAndUpdate({ adminId: id }, body);   
+
+            return { success: true, message: 'Accounts successfully UPDATED', code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to UPDATE Accounts', deepLog: err, code: 400 }
+        }
+
+    }
+
     async createFlashboardAccounts(queueName: string) {
          // Check if there are stations created
          let isExisting = await StationModel.find({ queueName });
