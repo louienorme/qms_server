@@ -18,6 +18,20 @@ const accountsGet = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
+// GET Queue Window Accounts
+const windowAccountsGet = async ( req: Request, res: Response ) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.getWindowAccounts(name);
+    sendResponse(res, result);
+}
+
+// GET Queue Flashboard Accounts
+const flashboardsGet = async ( req: Request, res: Response ) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.getFlashboards(name);
+    sendResponse(res, result);
+}
+
 // CREATE Flashboard Accounts
 const createFA = async ( req: Request, res: Response ) => {
     let name = req.params.queueName;
@@ -32,4 +46,5 @@ const createWA = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-export default { accountsGetAll, accountsGet, createFA, createWA };
+export default { accountsGetAll, accountsGet, windowAccountsGet,
+    flashboardsGet, createFA, createWA };

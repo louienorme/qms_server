@@ -7,7 +7,6 @@ Authorization: // Insert Bearer Token
 Content-type: application/json
 Body: {
     'name' : 'name',
-    'numOfStations' : 3,
     'admin' : []
 }
 

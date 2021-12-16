@@ -27,7 +27,12 @@ class QueueService {
         try {
             let queueId = `Q${faker.datatype.number(99999)}-${new Date().getFullYear()}`;
 
-            let queue = new QueueModel({ ...queueInfo, queueId, status: true });
+            let queue = new QueueModel({ 
+                ...queueInfo, 
+                queueId, 
+                numOfStations: 0,
+                status: true 
+            });
             await queue.save();
 
             return { success: true, message: 'Queue Creation Step 1 Success', code: 200 }
@@ -38,22 +43,25 @@ class QueueService {
 
     async createQueueStepTwo(stations: Array<any>, queueName: string) {
         // Check if there are stations created
-        let isExisting = await QueueModel.findOne({ queueName });
+        let isExisting = await QueueModel.findOne({ name: queueName });
         // Return if none exists
         if (!isExisting) return { success: false, message: 'Stations were not created yet', code: 400 }
 
         try {
 
-            let queue = await QueueModel.findOne({ queueName });
-
-            let stations = await QueueModel.findOneAndUpdate({ queueName }, { numOfStations: stations.length });
+            await QueueModel.findOneAndUpdate({ name: queueName }, { numOfStations: stations.length });
             
             for (let i = 0; i < stations.length; i++) {
                 let stationId = `S${faker.datatype.number(99999)}-${new Date().getFullYear()}`;
 
-                const { stationId, ...stations[i] } = stations[i]
+                const stationNew = { 
+                    stationId, 
+                    queueName,
+                    stationNumber: i + 1, 
+                    ...stations[i] 
+                } 
 
-                let station: any = new StationModel(stations[i]);
+                let station: any = new StationModel(stationNew);
                 await station.save()
             }
 
@@ -74,7 +82,7 @@ class QueueService {
             let stations = await StationModel.find({ queueName });
 
             stations.forEach(async (station) => {
-                for (let i = 0; i < station.numOfWindows; i++ ) {
+                for (let i = 0; i < station.numOfWindows; i++) {
                     let windowId =`W${faker.datatype.number(99999)}-${new Date().getFullYear()}`
                     let count = i + 1
                     let window = new WindowModel({
@@ -84,6 +92,7 @@ class QueueService {
                         status: true,
                         windowNumber: count
                     })
+                    console.log(window);
                     await window.save();
                 }
             });
