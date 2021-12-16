@@ -16,9 +16,25 @@ Content-type: application/json
 
 ------------------------
 
+GET Queue Window Accounts
+
+GET localhost:5000/api/accounts/windows/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+------------------------
+
+GET Queue Flashboard Accounts
+
+GET localhost:5000/api/accounts/flashboards/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+------------------------
+
 CREATE Flashboards Accounts
 
-PUT localhost:5000/api/accounts/flashboards/:queueName
+PUT localhost:5000/api/accounts/flashboards-create/:queueName
 Authorization: // Insert Bearer Token
 Content-type: application/json
 
@@ -26,6 +42,6 @@ Content-type: application/json
 
 CREATE Window Accounts
 
-PUT localhost:5000/api/accounts/windows/:queueName
+PUT localhost:5000/api/accounts/windows-create/:queueName
 Authorization: // Insert Bearer Token
 Content-type: application/json

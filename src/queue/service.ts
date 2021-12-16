@@ -27,21 +27,14 @@ class QueueService {
         try {
             let queueId = `Q${faker.datatype.number(99999)}-${new Date().getFullYear()}`;
 
-            let queue = new QueueModel({ ...queueInfo, queueId, status: true });
+            let queue = new QueueModel({ 
+                ...queueInfo, 
+                queueId, 
+                numOfStations: 0,
+                status: true 
+            });
             await queue.save();
 
-            for (let i = 0; i < queueInfo.numOfStations; i++) {
-            
-                let stationId = `S${faker.datatype.number(99999)}-${new Date().getFullYear()}`
-                let count = i + 1;
-                let station = new StationModel({
-                    queueName: queueInfo.name,
-                    stationId,
-                    status: true,
-                    stationNumber: count
-                })
-                await station.save();
-            }
             return { success: true, message: 'Queue Creation Step 1 Success', code: 200 }
         } catch (err) {
             return { success: false, message: 'Queue Creation Step 1 Failed', deepLog: err, code: 400 }
@@ -50,20 +43,28 @@ class QueueService {
 
     async createQueueStepTwo(stations: Array<any>, queueName: string) {
         // Check if there are stations created
-        let isExisting = await StationModel.find({ queueName });
+        let isExisting = await QueueModel.findOne({ name: queueName });
         // Return if none exists
-        if (!isExisting) return { success: false, message: 'No Stations were created', code: 400 }
+        if (!isExisting) return { success: false, message: 'Stations were not created yet', code: 400 }
 
         try {
+
+            await QueueModel.findOneAndUpdate({ name: queueName }, { numOfStations: stations.length });
             
             for (let i = 0; i < stations.length; i++) {
-                let station: any = await StationModel.findOneAndUpdate({ _id: stations[i]._id }, {
-                    ...stations[i],
+                let stationId = `S${faker.datatype.number(99999)}-${new Date().getFullYear()}`;
+
+                const stationNew = { 
+                    stationId, 
                     queueName,
-                    status: true
-                });
+                    stationNumber: i + 1, 
+                    ...stations[i] 
+                } 
+
+                let station: any = new StationModel(stationNew);
                 await station.save()
             }
+
             return { success: true, message: 'Queue Creation Step 2 Success', code: 200 }
         } catch (err) {
             return { success: false, message: 'Queue Creation Step 2 Failed', deepLog: err, code: 400 }
@@ -81,7 +82,7 @@ class QueueService {
             let stations = await StationModel.find({ queueName });
 
             stations.forEach(async (station) => {
-                for (let i = 0; i < station.numOfWindows; i++ ) {
+                for (let i = 0; i < station.numOfWindows; i++) {
                     let windowId =`W${faker.datatype.number(99999)}-${new Date().getFullYear()}`
                     let count = i + 1
                     let window = new WindowModel({
@@ -91,6 +92,7 @@ class QueueService {
                         status: true,
                         windowNumber: count
                     })
+                    console.log(window);
                     await window.save();
                 }
             });

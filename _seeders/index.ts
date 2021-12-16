@@ -4,6 +4,7 @@ dotenv.config();
 
 import AdminModel from  '../src/accounts/admin/model'
 import AdministratorAccountSeed from './accounts/administrator';
+import PermissionSeed from './permissions/permissions';
 import connectToDatabase from '../src/_config/dbConnect';
 
 /** Clears the Database Collection */
@@ -16,6 +17,9 @@ export async function clearAccounts(): Promise<void> {
 /** Seed Data */
 export async function seedAccounts() {
     console.log('Seeding Data...');
+
+    await PermissionSeed();
+    console.log('\tSeeding Permissions now...')
 
     await AdministratorAccountSeed();
     console.log('\tSeeding Admin Accounts now...')

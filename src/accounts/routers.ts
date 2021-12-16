@@ -21,16 +21,28 @@ router.get('/', [ authChecker ], accountController.accountsGetAll);
  */
 router.get('/:type', [ authChecker ], accountController.accountsGet);
 
+ /**
+ * Route to GET Queue Window Accounts
+ *
+ */
+router.get('/windows/:queueName', [ authChecker ], accountController.windowAccountsGet);
+
+   /**
+ * Route to GET Queue Flashboards Accounts
+ *
+ */
+router.get('/flashboards/:queueName', [ authChecker ], accountController.flashboardsGet);
+
   /**
  * Route to Create Flashboard Accounts
  *
  */
-router.put('/flashboards/:queueName', [ authChecker ], accountController.createFA);
+router.put('/flashboards-create/:queueName', [ authChecker ], accountController.createFA);
 
   /**
  * Route to Create Window Accounts
  *
  */
-router.put('/windows/:queueName', [ authChecker ], accountController.createWA);
+router.put('/windows-create/:queueName', [ authChecker ], accountController.createWA);
 
  export = router;
