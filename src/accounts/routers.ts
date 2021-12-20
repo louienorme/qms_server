@@ -42,7 +42,8 @@ router.delete('/delete/:adminId', [ authChecker ], accountController.accountsDel
  */
 
 router.put('/flashboards/:queueName', [ authChecker ], accountController.createFA);
-=======
+ 
+/** 
  * Route to GET Queue Window Accounts
  *
  */
