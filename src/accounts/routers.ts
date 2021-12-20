@@ -22,6 +22,7 @@ router.get('/', [ authChecker ], accountController.accountsGetAll);
 router.get('/:type', [ authChecker ], accountController.accountsGet);
 
  /**
+
  * Route to Update Accounts
  *
  */
@@ -41,34 +42,29 @@ router.delete('/delete/:adminId', [ authChecker ], accountController.accountsDel
  */
 
 router.put('/flashboards/:queueName', [ authChecker ], accountController.createFA);
+=======
+ * Route to GET Queue Window Accounts
+ *
+ */
+router.get('/windows/:queueName', [ authChecker ], accountController.windowAccountsGet);
+
+   /**
+ * Route to GET Queue Flashboards Accounts
+ *
+ */
+router.get('/flashboards/:queueName', [ authChecker ], accountController.flashboardsGet);
+
+  /**
+ * Route to Create Flashboard Accounts
+ *
+ */
+router.put('/flashboards-create/:queueName', [ authChecker ], accountController.createFA);
 
   /**
  * Route to Create Window Accounts
  *
  */
-router.put('/windows/:queueName', [ authChecker ], accountController.createWA);
-  /**
- * Route to Update Flashboard Accounts
- *
- */
-router.put('/flashboards/:queueName', [ authChecker ], accountController.updateFA);
+router.put('/windows-create/:queueName', [ authChecker ], accountController.createWA);
 
-  /**
- * Route to Update Window Accounts
- *
- */
-router.put('/windows/:queueName', [ authChecker ], accountController.updateWA);
-
-  /**
- * Route to Delete Flashboard Accounts
- *
- */
-   router.delete('/flashboards/:stationId', [ authChecker ], accountController.deleteFA);
-
-   /**
-  * Route to Update Window Accounts
-  *
-  */
- router.delete('/windows/:windowId', [ authChecker ], accountController.deleteWA);
 
  export = router;

@@ -30,7 +30,19 @@ const accountsUpdate = async (req: Request, res: Response) => {
 const accountsDelete = async (req: Request, res: Response) => {
     let id = req.params.adminId;
     let body = req.body;
-    let result: any = await accountService.deleteAccounts(id, body);
+    let result: any = await accountService.deleteAccounts(id, body);=======
+// GET Queue Window Accounts
+const windowAccountsGet = async ( req: Request, res: Response ) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.getWindowAccounts(name);
+    sendResponse(res, result);
+}
+
+// GET Queue Flashboard Accounts
+const flashboardsGet = async ( req: Request, res: Response ) => {
+    let name = req.params.queueName;
+    let result: any = await accountService.getFlashboards(name);
+
     sendResponse(res, result);
 }
 
@@ -48,33 +60,6 @@ const createWA = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-// UPDATE Flashboard Accounts
-const updateFA = async ( req: Request, res: Response) => {
-    let name = req.params.queueName;
-    let result: any = await accountService.UpdateFlashboardAccounts(name);
-    sendResponse(res, result);
-}
+export default { accountsGetAll, accountsGet, windowAccountsGet,
+    flashboardsGet, createFA, createWA };
 
-// UPDATE Window Accounts
-const updateWA = async ( req: Request, res: Response) => {
-    let name = req.params.queueName;
-    let result: any = await accountService.UpdateWindowAccounts(name);
-    sendResponse(res, result);
-}
-
-//DELETE Flashboard Accounts
-const deleteFA = async ( req: Request, res: Response) => {
-    let name = req.params.queueName;
-    let result: any = await accountService.DeleteFlashboardAccounts(name);
-    sendResponse(res, result);
-}
-
-// DELETE Window Accounts
-const deleteWA = async ( req: Request, res: Response) => {
-    let name = req.params.queueName;
-    let result: any = await accountService.DeleteWindowAccounts(name);
-    sendResponse(res, result);
-}
-
-
-export default { accountsGetAll, accountsGet, createFA, createWA, updateFA, updateWA, deleteFA, deleteWA, accountsUpdate, accountsDelete };

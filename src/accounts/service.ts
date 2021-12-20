@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs';
 import faker from 'faker';
 
 // Models
-import { AdminModel, FlashboardModel } from './index';
+import { AdminModel, FlashboardModel, WindowAccountsModel } from './index';
 import StationModel from '../station/model';
 import QueueModel from '../queue/model';
 
@@ -50,6 +50,7 @@ class AccountService {
 
     }
 
+
     async updateAccounts(id: string, body: any) {
         // Find if there is any account that exists
         let isExisting = await AdminModel.find({ adminId: id })
@@ -63,6 +64,26 @@ class AccountService {
             return { success: true, message: 'Accounts successfully UPDATED', code: 200 }
         } catch (err) {
             return { success: false, message: 'Failed to UPDATE Accounts', deepLog: err, code: 400 }
+        }
+    }
+  
+    async getWindowAccounts(queueName: string) {
+        // Find if there is any queue that exists
+        let isExisting = await QueueModel.find({ name: queueName })
+        // Return if none exists
+        if (!isExisting) return { success: false, message: 'Queue does not exist', code: 400 };
+        // Find if there is any account that exists
+        let hasAccounts = await WindowAccountsModel.find({ queueName })
+        // Return if none exists
+        if (!hasAccounts) return { success: false, message: 'No existing window in this queue', code: 400 };
+
+        try {
+
+            let accounts = await WindowAccountsModel.find({ queueName });
+
+            return { success: true, data: accounts, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to GET Window Accounts', deepLog: err, code: 400 }
         }
 
     }
@@ -80,6 +101,22 @@ class AccountService {
             return { success: true, message: 'Accounts successfully Deleted', code: 200 }
         } catch (err) {
             return { success: false, message: 'Failed to DELETE Accounts', deepLog: err, code: 400 }
+        } 
+    }
+          
+    async getFlashboards(queueName: string) {
+        // Find if there is any account that exists
+        let isExisting = await FlashboardModel.find({ queueName })
+        // Return if none exists
+        if (!isExisting) return { success: false, message: 'No Flashboard Accounts created for this queue', code: 400 };
+
+        try {
+
+            let accounts = await FlashboardModel.find({ queueName });
+
+            return { success: true, data: accounts, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to GET Accounts', deepLog: err, code: 400 }
         }
 
     }
@@ -131,9 +168,12 @@ class AccountService {
                     let windowId = `${new Date().getFullYear()}-${faker.datatype.number(99999)}-WA`;
                     let username = `${queueName}_S${station.stationNumber}W${count}`;
                     let password = await bcryptjs.hash(process.env.DEFAULT_PASSWORD || 'qms123', 10);
-                    let window = new AdminModel({
+                    let window = new WindowAccountsModel({
                         adminId: windowId,
-                        adminType: 'Window',
+                        queueName,
+                        status: true,
+                        station: station.stationNumber,
+                        window: count,
                         username,
                         password
                     })

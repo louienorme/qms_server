@@ -7,7 +7,6 @@ Authorization: // Insert Bearer Token
 Content-type: application/json
 Body: {
     'name' : 'name',
-    'numOfStations' : 3,
     'admin' : []
 }
 
@@ -15,19 +14,17 @@ Body: {
 
 Queue Creation Step 2 
 
-PUT localhost:5000/api/queue/createStepTwo/:queueName
+POST localhost:5000/api/queue/createStepTwo/:queueName
 Authorization: // Insert Bearer Token
 Content-type: application/json
 Body: {
     'stations' : [
         {
-            '_id' : '',
             'name': '',
             'admin' : [],
             'numOfWindows' : 2
         },
         {
-            '_id' : '',
             'name': '',
             'admin' : [],
             'numOfWindows' : 2
