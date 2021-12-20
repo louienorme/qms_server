@@ -22,6 +22,27 @@ router.get('/', [ authChecker ], accountController.accountsGetAll);
 router.get('/:type', [ authChecker ], accountController.accountsGet);
 
  /**
+
+ * Route to Update Accounts
+ *
+ */
+
+router.put('/update/:adminId', [ authChecker ], accountController.accountsUpdate); 
+
+ /**
+ * Route to Update Accounts
+ *
+ */
+
+router.delete('/delete/:adminId', [ authChecker ], accountController.accountsDelete); 
+
+ /**
+ * Route to Create Flashboard Accounts
+ *
+ */
+
+router.put('/flashboards/:queueName', [ authChecker ], accountController.createFA);
+=======
  * Route to GET Queue Window Accounts
  *
  */
@@ -44,5 +65,6 @@ router.put('/flashboards-create/:queueName', [ authChecker ], accountController.
  *
  */
 router.put('/windows-create/:queueName', [ authChecker ], accountController.createWA);
+
 
  export = router;

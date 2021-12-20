@@ -18,6 +18,19 @@ const accountsGet = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
+// UPDATE Accounts 
+const accountsUpdate = async (req: Request, res: Response) => {
+    let id = req.params.adminId;
+    let body = req.body;
+    let result: any = await accountService.updateAccounts(id, body);
+    sendResponse(res, result);
+}
+
+// DELETE Accounts 
+const accountsDelete = async (req: Request, res: Response) => {
+    let id = req.params.adminId;
+    let body = req.body;
+    let result: any = await accountService.deleteAccounts(id, body);=======
 // GET Queue Window Accounts
 const windowAccountsGet = async ( req: Request, res: Response ) => {
     let name = req.params.queueName;
@@ -29,6 +42,7 @@ const windowAccountsGet = async ( req: Request, res: Response ) => {
 const flashboardsGet = async ( req: Request, res: Response ) => {
     let name = req.params.queueName;
     let result: any = await accountService.getFlashboards(name);
+
     sendResponse(res, result);
 }
 
@@ -48,3 +62,4 @@ const createWA = async ( req: Request, res: Response ) => {
 
 export default { accountsGetAll, accountsGet, windowAccountsGet,
     flashboardsGet, createFA, createWA };
+
