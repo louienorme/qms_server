@@ -22,7 +22,7 @@ export const AdministratorAccountSeed = async (): Promise<void> => {
                 lastName: faker.name.lastName(),
                 nameExtension: faker.name.suffix()
             },
-            adminType: adminTypes[i],
+            type: adminTypes[i],
             address: faker.address.secondaryAddress(),
             contact: faker.phone.phoneNumber(),
             username: `Archon${adminId[i]}`,

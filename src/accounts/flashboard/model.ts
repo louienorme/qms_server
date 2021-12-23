@@ -6,6 +6,9 @@ const FlashboardSchema: Schema = new Schema(
         flashboardId : {
             type: String
         },
+        type: {
+            type: String
+        },
         status: {
             type: Boolean
         },

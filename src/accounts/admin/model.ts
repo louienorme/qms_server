@@ -6,7 +6,7 @@ const AdminSchema: Schema = new Schema(
         adminId: {
             type: String
         },
-        adminType: {
+        type: {
             type: String
         },
         status: {

@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 
 export default interface IAdmin extends Document {
     adminId: String;
-    adminType: String;
+    type: String;
     status: Boolean;
     fullName: {
         firstName: String;
