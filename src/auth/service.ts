@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import faker from 'faker';
 
 // Models
-import { AdminModel } from '../accounts';
+import { AdminModel, FlashboardModel, WindowAccountsModel } from '../accounts';
 
 dotenv.config();
 
@@ -55,24 +55,37 @@ class AuthService {
     }
 
     async adminLogin(adminInfo: any) {
-        // Find if account exists
-        let isExisting = await AdminModel.find({ username: adminInfo.username });
-        // Return if does not exists
-        if (isExisting.length === 0) return { success: false, message: 'Username does not exist', code: 400 };
-        // Compare Password
-        let admin: any = await AdminModel.findOne({ username: adminInfo.username });
-        let isMatch = await bscryptjs.compare(adminInfo.password, admin.password);
+
+        let admin = await AdminModel.find({ username: adminInfo.username });
+        let flashboard = await FlashboardModel.find({ username: adminInfo.username });
+        let window = await WindowAccountsModel.find({ username: adminInfo.username });
+
+        let account: any;
+
+        if(admin.length > 0) {
+            account = await AdminModel.findOne({ username: adminInfo.username });
+        }
+        else if (flashboard.length > 0) {
+            account = await FlashboardModel.findOne({ username: adminInfo.username });
+        }
+        else if (window.length > 0) {
+            account = await WindowAccountsModel.findOne({ username: adminInfo.username });
+        } 
+        else {
+            return { success: false, message: 'Username does not exist', code: 400 };
+        }
+
+        let isMatch = await bscryptjs.compare(adminInfo.password, account.password);
         // Return if password was wrong
         if (!isMatch) return { success: false, message: 'Invalid Credentials', code: 400 };
 
-        try {
+        try {  
 
             let adminObject = {
-                _id: admin._id,
-                adminId: admin.adminId,
-                username: admin.username,
-                type: admin.type,
-                permissions: admin.permissions
+                _id: account._id,
+                username: account.username,
+                type: account.type,
+                permissions: account.permissions
             }
             
             const token = jwt.sign(
@@ -86,7 +99,6 @@ class AuthService {
             return { success: false, message: 'Login Failed', deepLog: error, code: 400 };
         }
     }
-
 
 };
 
