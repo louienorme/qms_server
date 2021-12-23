@@ -6,6 +6,9 @@ const WindowAccountSchema: Schema = new Schema(
         adminId : {
             type: String
         },
+        type : {
+            type: String
+        },
         status: {
             type: Boolean
         },
