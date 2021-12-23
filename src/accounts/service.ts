@@ -50,6 +50,23 @@ class AccountService {
 
     }
 
+
+    async updateAccounts(id: string, body: any) {
+        // Find if there is any account that exists
+        let isExisting = await AdminModel.find({ adminId: id })
+        // Return if none exists
+        if (!isExisting) return { success: true, data: [], code: 200 };
+
+        try {
+
+            await AdminModel.findOneAndUpdate({ adminId: id }, body);   
+
+            return { success: true, message: 'Accounts successfully UPDATED', code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to UPDATE Accounts', deepLog: err, code: 400 }
+        }
+    }
+  
     async getWindowAccounts(queueName: string) {
         // Find if there is any queue that exists
         let isExisting = await QueueModel.find({ name: queueName })
@@ -71,6 +88,22 @@ class AccountService {
 
     }
 
+    async deleteAccounts(id: string) {
+        // Find if there is any account that exists
+        let isExisting = await AdminModel.find({ adminId: id })
+        // Return if none exists
+        if (!isExisting) return { success: true, data: [], code: 200 };
+
+        try {
+
+            await AdminModel.findOneAndDelete({ adminId: id });   
+
+            return { success: true, message: 'Accounts successfully Deleted', code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to DELETE Accounts', deepLog: err, code: 400 }
+        } 
+    }
+          
     async getFlashboards(queueName: string) {
         // Find if there is any account that exists
         let isExisting = await FlashboardModel.find({ queueName })
@@ -100,10 +133,11 @@ class AccountService {
             let flashboardId = `${new Date().getFullYear()}-${faker.datatype.number(99999)}-FA`;
             let password = await bcryptjs.hash(process.env.DEFAULT_PASSWORD || 'qms123', 10);
 
-            for (let i = 0; i < queue.numOfStations; i++) {
+            for (let i = 1; i < queue.numOfStations; i++) {
                 let count = i + 1
                 let flashboard = new FlashboardModel({
                     flashboardId,
+                    type: 'Flashboard',
                     queueName,
                     status: true,
                     station: count,
@@ -137,6 +171,7 @@ class AccountService {
                     let password = await bcryptjs.hash(process.env.DEFAULT_PASSWORD || 'qms123', 10);
                     let window = new WindowAccountsModel({
                         adminId: windowId,
+                        type: 'Window',
                         queueName,
                         status: true,
                         station: station.stationNumber,
@@ -153,6 +188,7 @@ class AccountService {
             return { success: false, message: 'Failed to CREATE Window Accounts', deepLog: err, code: 400 }
         }
     }
+
 }
 
 export default AccountService;
