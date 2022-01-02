@@ -141,7 +141,7 @@ class AccountService {
                     queueName,
                     status: true,
                     station: count,
-                    username: `Station-${count}_Flashboard`,
+                    username: `${queueName}-Station-${count}_Flashboard`,
                     password
                 })
                 await flashboard.save()
