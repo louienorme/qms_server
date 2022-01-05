@@ -10,7 +10,6 @@ export default interface IAdmin extends Document {
         lastName: String;
         nameExtension : String;
     };
-    address: String;
     contact: {
         email: String;
     };
