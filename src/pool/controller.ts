@@ -7,7 +7,8 @@ const poolsService = new PoolsService();
 
 // Create Number
 const numberCreate = async ( req: Request, res: Response ) => {
-    let result: any = await poolsService.createNumber();
+    let queue = req.params.queueName;
+    let result: any = await poolsService.createNumber(queue);
     sendResponse(res, result);
 }
 

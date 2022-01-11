@@ -13,6 +13,6 @@ const router = express.Router();
  * Route to Create Ticker
  *
  */
- router.get('/create', [ authChecker ], poolsController.numberCreate);
+ router.put('/getTicket/:queueName', [ authChecker ], poolsController.numberCreate);
 
  export = router;

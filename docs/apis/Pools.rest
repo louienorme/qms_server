@@ -1,0 +1,7 @@
+------------------------
+
+Create Number
+
+PUT localhost:5000/api/pools/getTicket/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
