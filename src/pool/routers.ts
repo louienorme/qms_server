@@ -21,5 +21,10 @@ router.put('/getTicket/:queueName', [ authChecker ], poolsController.numberCreat
  */
 router.post('/getTicket', [ authChecker ], poolsController.numberGet);
 
+/**
+ * Route to move Ticket to next station
+ * 
+ */
+ router.post('/nextTicket', [ authChecker ], poolsController.numberNext);
 
 export = router;

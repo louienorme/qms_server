@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 import { PoolsModel } from ".";
 import { WindowAccountsModel } from '../accounts';
 import ArchiveModel from '../archive/model';
+import { QueueModel } from '../queue';
 
 /**
  * Module Pools
@@ -120,7 +121,7 @@ class PoolsService {
                 timeEnded: '',
             }
 
-            let ticketNew = await PoolsModel.findByIdAndUpdate({ _id: getTicket[0]._id }, newTicket);
+            await PoolsModel.findByIdAndUpdate({ _id: getTicket[0]._id }, newTicket);
 
             // Archive Old Ticket
 
@@ -141,14 +142,72 @@ class PoolsService {
 
             return { success: true, message: 'GET Ticket Successful', code: 200 }
         } catch (err) {
-            
-            console.log(err)
             return { success: false, message: 'FAILED to GET Number', deepLog: err, code: 400}
         }
 
     }
 
     async nextNumber(details: any) {
+
+        try {
+
+            // Update Window Status
+            await WindowAccountsModel.findOneAndUpdate(
+                { 
+                    queueName: details.queueName,
+                    station: details.station,
+                    window: details.window 
+                }, 
+                { status: 1 }
+            )   
+
+            // Get Ticket Details
+            let ticket: any = await PoolsModel.findById({ _id: details.id });
+
+            let isLast: any = await QueueModel.findOne({ name: details.queueName });
+            if (isLast.numOfStations === details.station) {
+                // Delete Ticket if Station is Last
+                await PoolsModel.findByIdAndDelete({ _id: details.id });
+            }
+            else {  
+
+                // Update New Ticket Status
+                let newTicket = {
+                    poolId: ticket.poolId,
+                    ticket: ticket.ticket,
+                    user: ticket.user,
+                    queue: details.queueName,
+                    station: details.station + 1,
+                    window: 0,
+                    status: 'waiting',
+                    timeStarted: DateTime.now().toISO(),
+                    timeEnded: '',
+                }
+
+                await PoolsModel.findByIdAndUpdate({ _id: details.id }, newTicket);
+
+            }
+
+            // Store Ticket to Archives
+            let archiveTicket = {
+                poolId: ticket.poolId,
+                ticket: ticket.ticket,
+                user: ticket.user,
+                queue: ticket.queue,
+                station: ticket.station,
+                window: ticket.window,
+                action: 'complete',
+                timeStarted: ticket.timeStarted,
+                timeEnded: DateTime.now().toISO(),
+            }
+            
+            let storeTicket = new ArchiveModel(archiveTicket);
+            storeTicket.save();
+
+            return { success: true, message: 'Transaction Completed', code: 200 }
+        } catch (err) {
+            return { success: false, message: 'FAILED to move ticket to next station', deepLog: err, code: 400 }
+        }
 
     }
 
