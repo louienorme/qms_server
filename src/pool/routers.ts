@@ -10,9 +10,16 @@ const router = express.Router();
  */
 
 /**
- * Route to Create Ticker
+ * Route to Create Ticket
  *
  */
- router.put('/getTicket/:queueName', [ authChecker ], poolsController.numberCreate);
+router.put('/getTicket/:queueName', [ authChecker ], poolsController.numberCreate);
 
- export = router;
+/**
+ * Route to Get a Ticket from Pools
+ *  
+ */
+router.post('/getTicket', [ authChecker ], poolsController.numberGet);
+
+
+export = router;

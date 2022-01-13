@@ -173,7 +173,7 @@ class AccountService {
                         adminId: windowId,
                         type: 'Window',
                         queueName,
-                        status: true,
+                        status: 1,
                         station: station.stationNumber,
                         window: count,
                         username,

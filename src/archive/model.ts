@@ -6,6 +6,9 @@ const ArchiveSchema: Schema = new Schema(
         archiveId: {
             type: String
         },
+        ticket: {
+            type: Number
+        },
         queue: {
             type: String
         },

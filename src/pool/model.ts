@@ -16,10 +16,10 @@ const PoolSchema: Schema = new Schema(
             type: String
         },
         station: {
-            type: String
+            type: Number
         },
         window: {
-            type: String
+            type: Number
         },
         status: {
             type: String

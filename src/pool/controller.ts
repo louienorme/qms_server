@@ -12,4 +12,18 @@ const numberCreate = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-export default { numberCreate };
+// Get Number
+const numberGet = async ( req: Request, res: Response ) => {
+    let body = req.body;
+    let result: any = await poolsService.getNumber(body);
+    sendResponse(res, result);
+}
+
+// Next Number 
+const numberNext = async ( req: Request, res: Response ) => {
+    let body = req.body 
+    let result: any = await poolsService.nextNumber(body);
+    sendResponse(res, result);
+}
+
+export default { numberCreate, numberNext, numberGet };
