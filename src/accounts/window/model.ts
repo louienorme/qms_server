@@ -10,7 +10,7 @@ const WindowAccountSchema: Schema = new Schema(
             type: String
         },
         status: {
-            type: Boolean
+            type: Number
         },
         queueName: {
             type: String
