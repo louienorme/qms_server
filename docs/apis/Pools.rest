@@ -47,3 +47,11 @@ body: {
     window: 1,
     id:    
 }
+
+------------------------
+
+Get Number in Window
+
+GET localhost:5000/api/pools/getTicket
+Authorization: // Insert Bearer Token
+Content-type: application/json 

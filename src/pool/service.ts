@@ -266,6 +266,25 @@ class PoolsService {
         }
     }
 
+    async checkNumber (details: any) {
+        try {
+
+            let windowTicket = await PoolsModel.findOne(
+                {
+                    queue: details.queueName,
+                    station: details.station,
+                    window: details.window
+                }
+            )
+
+            if (!windowTicket) return { success: true, data:[], message: 'No Ticket on window', code: 200 }
+
+            return { success: true, data: windowTicket, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'FAILED to check ticket on window', code: 400 }
+        }
+    }
+
 }
 
 export default PoolsService;

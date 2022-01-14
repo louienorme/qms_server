@@ -33,4 +33,11 @@ const numberReturn = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-export default { numberCreate, numberNext, numberGet, numberReturn };
+// Check Number
+const numberCheck = async ( req: Request, res: Response ) => {
+    let body = req.body 
+    let result: any = await poolsService.checkNumber(body);
+    sendResponse(res, result);
+}
+
+export default { numberCreate, numberNext, numberGet, numberReturn, numberCheck };

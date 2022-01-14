@@ -28,9 +28,15 @@ router.post('/getTicket', [ authChecker ], poolsController.numberGet);
 router.post('/nextTicket', [ authChecker ], poolsController.numberNext);
 
 /**
- * Route to return ticker to pool
+ * Route to return ticket to pool
  * 
  */
 router.post('/returnTicket', [ authChecker ], poolsController.numberReturn);
+
+/**
+ * Check if there is number in window
+ * 
+ */
+router.post('/windowTicket', [ authChecker ], poolsController.numberCheck);
 
 export = router;
