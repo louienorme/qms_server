@@ -285,6 +285,22 @@ class PoolsService {
         }
     }
 
+    async getTickets (details: any) {
+
+        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station });
+        
+        if (isEmpty.length === 0) return { success: true, data: [], message: 'The Pool is empty', code: 200 }
+
+        try {
+
+            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station });
+
+            return { success: true, data: tickets, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'FAILED to GET Tickets', code: 400 }
+        }
+    }
+
 }
 
 export default PoolsService;

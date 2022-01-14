@@ -40,4 +40,12 @@ const numberCheck = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-export default { numberCreate, numberNext, numberGet, numberReturn, numberCheck };
+// GET Station Tickets
+const ticketsGet = async ( req: Request, res: Response ) => {
+    let body = req.body 
+    let result: any = await poolsService.getTickets(body);
+    sendResponse(res, result);
+}
+
+export default { numberCreate, numberNext, numberGet, 
+    numberReturn, numberCheck, ticketsGet };

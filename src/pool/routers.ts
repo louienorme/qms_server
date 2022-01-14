@@ -39,4 +39,10 @@ router.post('/returnTicket', [ authChecker ], poolsController.numberReturn);
  */
 router.post('/windowTicket', [ authChecker ], poolsController.numberCheck);
 
+/**
+ * Get Pool Numbers
+ * 
+ */
+router.post('/getTickets', [ authChecker ], poolsController.ticketsGet);
+
 export = router;
