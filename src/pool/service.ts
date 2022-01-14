@@ -211,12 +211,59 @@ class PoolsService {
 
     }
 
-    async recallNumber() {
-
-    }
-
-    async returnNumber() {
+    async returnNumber(details: any) {
         
+        try {
+
+            // Update Window Status
+            await WindowAccountsModel.findOneAndUpdate(
+                { 
+                    queueName: details.queueName,
+                    station: details.station,
+                    window: details.window 
+                }, 
+                { status: 1 }
+            )   
+
+            // Get Ticket Details
+            let ticket: any = await PoolsModel.findById({ _id: details.id });
+            
+            // Update New Ticket Status
+            let newTicket = {
+                poolId: ticket.poolId,
+                ticket: ticket.ticket,
+                user: ticket.user,
+                queue: details.queueName,
+                station: details.station,
+                window: 0,
+                status: 'waiting',
+                timeStarted: DateTime.now().toISO(),
+                timeEnded: '',
+            }
+
+            await PoolsModel.findByIdAndUpdate({ _id: details.id }, newTicket);
+
+            // Store Ticket to Archives
+            let archiveTicket = {
+                poolId: ticket.poolId,
+                ticket: ticket.ticket,
+                user: ticket.user,
+                queue: ticket.queue,
+                station: ticket.station,
+                window: ticket.window,
+                action: 'returned',
+                timeStarted: ticket.timeStarted,
+                timeEnded: DateTime.now().toISO(),
+            }
+            
+            let storeTicket = new ArchiveModel(archiveTicket);
+            storeTicket.save();
+
+
+            return { success: true, message: 'Ticket returned to the pool', code: 200 }
+        } catch (err) { 
+            return { success: false, message: 'FAILED to return ticket to pool', code: 400 }
+        }
     }
 
 }

@@ -17,5 +17,33 @@ Content-type: application/json
 body: {
     queueName: test,
     station: 2,
-    window: 1
+    window: 1   
+}
+
+------------------------
+
+Next Number
+
+POST localhost:5000/api/pools/nextTicket
+Authorization: // Insert Bearer Token
+Content-type: application/json
+body: {
+    queueName: test,
+    station: 2,
+    window: 1,
+    id:    
+}
+
+------------------------
+
+Return Number
+
+POST localhost:5000/api/pools/returnTicket
+Authorization: // Insert Bearer Token
+Content-type: application/json
+body: {
+    queueName: test,
+    station: 2,
+    window: 1,
+    id:    
 }

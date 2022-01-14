@@ -26,4 +26,11 @@ const numberNext = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-export default { numberCreate, numberNext, numberGet };
+// Return Number 
+const numberReturn = async ( req: Request, res: Response ) => {
+    let body = req.body 
+    let result: any = await poolsService.returnNumber(body);
+    sendResponse(res, result);
+}
+
+export default { numberCreate, numberNext, numberGet, numberReturn };

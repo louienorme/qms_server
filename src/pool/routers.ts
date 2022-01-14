@@ -25,6 +25,12 @@ router.post('/getTicket', [ authChecker ], poolsController.numberGet);
  * Route to move Ticket to next station
  * 
  */
- router.post('/nextTicket', [ authChecker ], poolsController.numberNext);
+router.post('/nextTicket', [ authChecker ], poolsController.numberNext);
+
+/**
+ * Route to return ticker to pool
+ * 
+ */
+router.post('/returnTicket', [ authChecker ], poolsController.numberReturn);
 
 export = router;
