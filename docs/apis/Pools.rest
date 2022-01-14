@@ -1,0 +1,74 @@
+------------------------
+
+Create Number
+
+PUT localhost:5000/api/pools/getTicket/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+
+------------------------
+
+Get Number
+
+POST localhost:5000/api/pools/getTicket
+Authorization: // Insert Bearer Token
+Content-type: application/json
+body: {
+    queueName: test,
+    station: 2,
+    window: 1   
+}
+
+------------------------
+
+Next Number
+
+POST localhost:5000/api/pools/nextTicket
+Authorization: // Insert Bearer Token
+Content-type: application/json
+body: {
+    queueName: test,
+    station: 2,
+    window: 1,
+    id:    
+}
+
+------------------------
+
+Return Number
+
+POST localhost:5000/api/pools/returnTicket
+Authorization: // Insert Bearer Token
+Content-type: application/json
+body: {
+    queueName: test,
+    station: 2,
+    window: 1,
+    id:    
+}
+
+------------------------
+
+Get Number in Window
+
+POST localhost:5000/api/pools/windowTicket
+Authorization: // Insert Bearer Token
+Content-type: application/json 
+body: {
+    queueName: test,
+    station: 2,
+    window: 1  
+}
+
+------------------------
+
+Get Tickets in Station
+
+POST localhost:5000/api/pools/getTickets
+Authorization: // Insert Bearer Token
+Content-type: application/json 
+body: {
+    queueName: test,
+    station: 2
+}

@@ -23,8 +23,9 @@ export const AdministratorAccountSeed = async (): Promise<void> => {
                 nameExtension: faker.name.suffix()
             },
             type: adminTypes[i],
-            address: faker.address.secondaryAddress(),
-            contact: faker.phone.phoneNumber(),
+            contact: {
+                email: faker.internet.email()
+            },
             username: `Archon${adminId[i]}`,
             password: password,
             permissions : []

@@ -18,9 +18,6 @@ const AdminSchema: Schema = new Schema(
             lastName: String,
             nameExtension : String
         },
-        address: {
-            type: String
-        },
         contact: {
             email: String
         },

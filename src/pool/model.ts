@@ -6,6 +6,9 @@ const PoolSchema: Schema = new Schema(
         poolId: {
             type: String
         },
+        ticket: {
+            type: Number
+        },
         user: {
             type: String
         },
@@ -13,10 +16,10 @@ const PoolSchema: Schema = new Schema(
             type: String
         },
         station: {
-            type: String
+            type: Number
         },
         window: {
-            type: String
+            type: Number
         },
         status: {
             type: String
