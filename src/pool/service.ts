@@ -17,7 +17,7 @@ import { QueueModel } from '../queue';
 class PoolsService {
     constructor () {};
 
-    async createNumber(queueName: string) {
+    async createNumber(queueName: string, body: any) {
 
         try {
 
@@ -35,9 +35,24 @@ class PoolsService {
                     window: 0,
                     status: 'waiting',
                     timeStarted: DateTime.now().toISO(),
-                    timeEnded: ''
+                    timeEnded: '',
+                    createdBy: body.creator
                 })
                 ticketOne.save();
+
+                let record = new ArchiveModel({
+                    poolId,
+                    ticket: 1,
+                    queue: queueName,
+                    user: '',
+                    station: 1,
+                    window: body.window,
+                    action: 'created',
+                    timeStarted: DateTime.now().toISO(),
+                    timeEnded: DateTime.now().toISO(),
+                    createdBy: body.creator
+                })
+                record.save();
             }
             else {
 
@@ -53,9 +68,24 @@ class PoolsService {
                     window: 0,
                     status: 'waiting',
                     timeStarted: DateTime.now().toISO(),
-                    timeEnded: ''
+                    timeEnded: '',
+                    createdBy: body.creator
                 })
                 tickets.save();
+
+                let record = new ArchiveModel({
+                    poolId,
+                    ticket: 1,
+                    queue: queueName,
+                    user: '',
+                    station: 1,
+                    window: body.window,
+                    action: 'created',
+                    timeStarted: DateTime.now().toISO(),
+                    timeEnded: DateTime.now().toISO(),
+                    createdBy: body.creator
+                })
+                record.save();
             }
 
             return { success: true, message: 'Number Created!', code: 200 }
@@ -119,6 +149,7 @@ class PoolsService {
                 status: 'transacting',
                 timeStarted: DateTime.now().toISO(),
                 timeEnded: '',
+                createdBy: getTicket[0].createdBy
             }
 
             await PoolsModel.findByIdAndUpdate({ _id: getTicket[0]._id }, newTicket);
@@ -135,6 +166,7 @@ class PoolsService {
                 action: 'acquired',
                 timeStarted: getTicket[0].timeStarted,
                 timeEnded: DateTime.now().toISO(),
+                createdBy: getTicket[0].createdBy
             }
 
             let storeTicket = new ArchiveModel(archiveTicket);
@@ -182,6 +214,7 @@ class PoolsService {
                     status: 'waiting',
                     timeStarted: DateTime.now().toISO(),
                     timeEnded: '',
+                    createdBy: ticket.createdBy
                 }
 
                 await PoolsModel.findByIdAndUpdate({ _id: details.id }, newTicket);
@@ -199,6 +232,7 @@ class PoolsService {
                 action: 'complete',
                 timeStarted: ticket.timeStarted,
                 timeEnded: DateTime.now().toISO(),
+                createdBy: ticket.createdBy
             }
             
             let storeTicket = new ArchiveModel(archiveTicket);
@@ -239,6 +273,7 @@ class PoolsService {
                 status: 'waiting',
                 timeStarted: DateTime.now().toISO(),
                 timeEnded: '',
+                createdBy: ticket.createdBy
             }
 
             await PoolsModel.findByIdAndUpdate({ _id: details.id }, newTicket);
@@ -254,6 +289,7 @@ class PoolsService {
                 action: 'returned',
                 timeStarted: ticket.timeStarted,
                 timeEnded: DateTime.now().toISO(),
+                createdBy: ticket.createdBy
             }
             
             let storeTicket = new ArchiveModel(archiveTicket);
@@ -287,13 +323,13 @@ class PoolsService {
 
     async getTickets (details: any) {
 
-        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station });
+        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting' });
         
         if (isEmpty.length === 0) return { success: true, data: [], message: 'The Pool is empty', code: 200 }
 
         try {
 
-            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station });
+            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting' });
 
             return { success: true, data: tickets, code: 200 }
         } catch (err) {

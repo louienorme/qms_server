@@ -10,4 +10,5 @@ export default interface IArchive extends Document {
     action: String;
     timeStart: String;
     timeEnd: String;
+    createdBy: String;
 }

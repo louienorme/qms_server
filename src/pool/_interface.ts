@@ -10,4 +10,5 @@ export default interface IPool extends Document {
     status: String;
     timeStarted: String;
     timeEnded: String;
+    createdBy: String;
 }

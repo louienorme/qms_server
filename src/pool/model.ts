@@ -29,6 +29,9 @@ const PoolSchema: Schema = new Schema(
         },
         timeEnded: {
             type: String
+        },
+        createdBy: {
+            type: String
         }
     }
 )
