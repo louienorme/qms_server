@@ -22,6 +22,12 @@ router.get('/', [ authChecker ], accountController.accountsGetAll);
 router.get('/:type', [ authChecker ], accountController.accountsGet);
 
  /**
+ * Route to GET Account
+ *
+ */
+router.get('/get/:id', [ authChecker ], accountController.accountGet);
+
+ /**
 
  * Route to Update Accounts
  *
