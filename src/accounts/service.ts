@@ -33,6 +33,37 @@ class AccountService {
         }
     }
 
+    async getAccount(id: string) {
+
+        try {
+
+            let account: any;
+
+            let admin: any = await AdminModel.find({ _id: id });
+            let flash: any = await FlashboardModel.find({ _id: id });
+            let window: any = await WindowAccountsModel.find({ _id: id });
+
+            if(admin.length > 0) {
+                account = admin
+            } 
+            else if(flash.length > 0) {
+                account = flash
+            } 
+            else if(window.length > 0) {
+                account = window
+            }
+            else {
+                return { success: false, message: 'Id does not exists', code: 400 }
+            }
+
+
+            return { success: true, data: account, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to GET Account', deepLog: err, code: 400 }
+        }
+
+    }
+
     async getAccounts(type: string) {
         // Find if there is any account that exists
         let isExisting = await AdminModel.find({ adminType: type })
