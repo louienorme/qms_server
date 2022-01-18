@@ -12,6 +12,13 @@ const accountsGetAll = async ( req: Request, res: Response ) => {
 };
 
 // GET Accounts
+const accountGet = async ( req: Request, res: Response ) => {
+    let id = req.params.id;
+    let result: any = await accountService.getAccount(id);
+    sendResponse(res, result);
+}
+
+// GET Accounts
 const accountsGet = async ( req: Request, res: Response ) => {
     let type = req.params.type;
     let result: any = await accountService.getAccounts(type);
@@ -61,6 +68,6 @@ const createWA = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-export default { accountsGetAll, accountsGet, windowAccountsGet, accountsDelete, 
+export default { accountsGetAll, accountGet, accountsGet, windowAccountsGet, accountsDelete, 
     accountsUpdate, flashboardsGet, createFA, createWA }
 

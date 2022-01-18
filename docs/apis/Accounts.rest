@@ -16,6 +16,14 @@ Content-type: application/json
 
 ------------------------
 
+GET One Account
+
+GET localhost:5000/api/accounts/get/:id
+Authorization: // Insert Bearer Token
+Content-type: application/json
+
+------------------------
+
 GET Queue Window Accounts
 
 GET localhost:5000/api/accounts/windows/:queueName

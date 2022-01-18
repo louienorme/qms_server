@@ -29,6 +29,9 @@ const ArchiveSchema: Schema = new Schema(
         },
         timeEnded: {
             type: String
+        },
+        createdBy: {
+            type: String
         }
     },
     {
