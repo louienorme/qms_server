@@ -21,31 +21,35 @@ class AuthService {
 
     async adminRegister(adminInfo: any) {
         // Find for a duplicate account
-        let isExisting = await AdminModel.find({ email: adminInfo.email });
+        let isExisting = await AdminModel.find({ contact: { email: adminInfo.contact.email } });
         // Return if there is a duplicate
         if (isExisting.length > 0) return { success: false, message: 'Admin already exist', code: 400 };
         // Set a default password
         adminInfo.password = await bscryptjs.hash(process.env.DEFAULT_PASSWORD || 'qms123', 10);
         // Generate Random ID
-        if (adminInfo.type == 'Super') {
-            adminInfo.adminId = 
+        let adminId;
+        if (adminInfo.adminType == 'Super') {
+            adminId = 
                 `${new Date().getFullYear()}-${faker.datatype.number(99999)}-SA`;
         }
-        if (adminInfo.type == 'Queue') {
-            adminInfo.adminId = 
+        if (adminInfo.adminType == 'Queue') {
+            adminId = 
                 `${new Date().getFullYear()}-${faker.datatype.number(99999)}-QA`;
         }
-        if (adminInfo.type == 'Station') {
-            adminInfo.adminId = 
+        if (adminInfo.adminType == 'Station') {
+            adminId = 
                 `${new Date().getFullYear()}-${faker.datatype.number(99999)}-STA`;
-        }
-        if (adminInfo.type == 'Window') {
-            adminInfo.adminId = 
-                `${new Date().getFullYear()}-${faker.datatype.number(99999)}-WA`;
         }
 
         try {
-            const newAdmin = new AdminModel({ ...adminInfo, status: true });
+            const body = {
+                ...adminInfo,
+                adminId,
+                type: adminInfo.adminType,
+                status: true
+            }
+
+            const newAdmin = new AdminModel(body);
             await newAdmin.save();
             return { success: true, data: newAdmin, code: 201, message: 'Account Creation Successful' };
 

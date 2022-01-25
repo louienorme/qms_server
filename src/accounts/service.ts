@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs';
 import faker from 'faker';
 
 // Models
-import { AdminModel, FlashboardModel, WindowAccountsModel } from './index';
+import { accountController, AdminModel, FlashboardModel, WindowAccountsModel } from './index';
 import StationModel from '../station/model';
 import QueueModel from '../queue/model';
 
@@ -84,15 +84,16 @@ class AccountService {
 
     async updateAccounts(id: string, body: any) {
         // Find if there is any account that exists
-        let isExisting = await AdminModel.find({ adminId: id })
+        let isExisting = await AdminModel.find({ _id: id })
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 };
 
         try {
 
-            await AdminModel.findOneAndUpdate({ adminId: id }, body);   
+           await AdminModel.findOneAndUpdate({ _id: id }, body);   
+           const account = await AdminModel.findOne({ _id: id });
 
-            return { success: true, message: 'Accounts successfully UPDATED', code: 200 }
+            return { success: true , data: account, message: 'Accounts successfully UPDATED', code: 200 }
         } catch (err) {
             return { success: false, message: 'Failed to UPDATE Accounts', deepLog: err, code: 400 }
         }
@@ -121,13 +122,13 @@ class AccountService {
 
     async deleteAccounts(id: string) {
         // Find if there is any account that exists
-        let isExisting = await AdminModel.find({ adminId: id })
+        let isExisting = await AdminModel.findById({ _id: id })
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 };
 
         try {
 
-            await AdminModel.findOneAndDelete({ adminId: id });   
+            await AdminModel.findByIdAndDelete({ _id: id });   
 
             return { success: true, message: 'Accounts successfully Deleted', code: 200 }
         } catch (err) {
