@@ -28,7 +28,7 @@ const accountsUpdate = async (req: Request, res: Response) => {
 
 // DELETE Accounts 
 const accountsDelete = async (req: Request, res: Response) => {
-    let id = req.params.adminId;
+    let id = req.params.id;
     let result: any = await accountService.deleteAccounts(id);
     sendResponse(res, result);
 }

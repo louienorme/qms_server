@@ -7,8 +7,8 @@ export const AdministratorAccountSeed = async (): Promise<void> => {
     // hash password with the default value of DEVSCRUM
     const password = await bcryptjs.hash(process.env.DEFAULT_PASSWORD || 'DEVSCRUM', 10);
 
-    const adminTypes = ['Super', 'Queue', 'Station', 'Window'];
-    const adminId = ['SA', 'QA', 'STA', 'WA'];
+    const adminTypes = ['Super', 'Queue', 'Station'];
+    const adminId = ['SA', 'QA', 'STA'];
 
     const adminAccounts = [];
 
