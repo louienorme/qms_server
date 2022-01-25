@@ -18,6 +18,6 @@ const router = express.Router();
  /**
   *  Route to register a user
   */
- router.post('/signup', [], authController.register);
+ router.post('/create', [], authController.register);
  
  export = router;

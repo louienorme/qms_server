@@ -10,6 +10,7 @@ import authRoutes from  './auth/routers';
 import accountRoutes from './accounts/routers';
 import queueRoutes from './queue/routers';
 import poolRoutes from './pool/routers';
+import archiveRoutes from './archive/routers';
 
 // Require Env
 dotenv.config()
@@ -28,6 +29,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/accounts', accountRoutes);
 app.use('/api/queue', queueRoutes);
 app.use('/api/pools', poolRoutes);
+app.use('/api/archives', archiveRoutes);
 
 // Run App
 const port = process.env.PORT || 5000;

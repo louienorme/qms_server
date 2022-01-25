@@ -40,7 +40,7 @@ router.put('/update/:adminId', [ authChecker ], accountController.accountsUpdate
  *
  */
 
-router.delete('/delete/:adminId', [ authChecker ], accountController.accountsDelete); 
+router.delete('/delete/:id', [ authChecker ], accountController.accountsDelete); 
 
  /**
  * Route to Create Flashboard Accounts
