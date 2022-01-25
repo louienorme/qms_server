@@ -9,3 +9,24 @@ Body: {
     "password" : "queue123"
 }
 // This account is a Super Admin Account
+
+------------------------
+
+Admin Create
+
+POST localhost:5000/api/auth/create
+Content-type: application/json
+Body: {
+    adminType: 'Super',
+    fullName: {
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        nameExtension: ''
+    },
+    address: '',
+    contact: {
+        email: ''
+    },
+    permissions: []
+}
