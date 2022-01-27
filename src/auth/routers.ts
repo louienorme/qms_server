@@ -19,5 +19,10 @@ const router = express.Router();
   *  Route to register a user
   */
  router.post('/create', [], authController.register);
+
+  /**
+  *  Route to send email
+  */
+   router.post('/send-email', [], authController.emailSend);
  
  export = router;

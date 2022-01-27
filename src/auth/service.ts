@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import bscryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
 import faker from 'faker';
-
+const sgMail = require('@sendgrid/mail');
 // Models
 import { AdminModel, FlashboardModel, WindowAccountsModel } from '../accounts';
 
@@ -100,6 +100,27 @@ class AuthService {
 
             return { success: true, data: `Bearer ${token}`, code: 201, message: 'Login Successful' };
         } catch (error) {
+            return { success: false, message: 'Login Failed', deepLog: error, code: 400 };
+        }
+    }
+
+    async sendEmail(email:any) {
+
+        sgMail.setApiKey(process.env.API_KEY);
+        
+        try{
+            const message = {
+                to: 'ericang393@gmail.com',
+                from: {name: 'QUEUE MANAGER', email: 'verkiperta@vusra.com'},
+                subject: 'Hello',
+                text: 'Hello Eric!',
+                html: '<h1>Hello Eric HAHA!</h1>',
+            };
+
+            sgMail.send(message)
+            return { success: true, code: 201, message: 'Login Successful' };
+                
+        }catch (error) {
             return { success: false, message: 'Login Failed', deepLog: error, code: 400 };
         }
     }
