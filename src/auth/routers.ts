@@ -1,5 +1,6 @@
 import express from 'express';
 import { authController } from './index';
+import { authChecker } from '../_util/checkToken';
 
 const router = express.Router();
 
@@ -23,6 +24,6 @@ const router = express.Router();
   /**
   *  Route to send email
   */
-   router.post('/send-email', [], authController.emailSend);
+   router.post('/send-email', [ authChecker ], authController.emailSend);
  
  export = router;

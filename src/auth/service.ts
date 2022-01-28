@@ -110,7 +110,7 @@ class AuthService {
         
         try{
             const message = {
-                to: 'ericang393@gmail.com',
+                to: email,
                 from: {name: 'QUEUE MANAGER', email: 'verkiperta@vusra.com'},
                 subject: 'Hello',
                 text: 'Hello Eric!',
