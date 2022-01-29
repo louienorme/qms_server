@@ -2,11 +2,13 @@
 import faker from 'faker';
 
 // Models
-import { FlashboardModel, AdminModel } from "src/accounts";
+import { AdminModel, FlashboardModel, WindowAccountsModel } from "../accounts";
+import { PoolsModel } from "../pool"
 import QueueModel from './model';
 import StationModel from '../station/model';
 import WindowModel from '../window/model';
 import BranchModel from '../branch/model';
+import { StringUnitLength } from 'luxon';
 
 /**
  * Module Queue
@@ -164,6 +166,28 @@ class QueueService {
             return { success: true, data: windows, code: 200 }
         } catch (err) {
             return { success: false, message: 'Failed to GET Windows', deepLog: err, code: 400 }
+        }
+    }
+
+    async deleteQueue(name: string) {
+        // Check if there are Queue created
+        let isExisting = await WindowModel.find({ queueName: name });
+        // Return if none exists
+        if (!isExisting) return { success: true, data: [], code: 200 }
+
+        try {
+            await WindowModel.deleteMany({ queueName: name});
+            await StationModel.deleteMany({ queueName: name });
+            await FlashboardModel.deleteMany({ queueName: name });
+            await WindowAccountsModel.deleteMany({ queueName: name });
+            await PoolsModel.deleteMany({ queue: name });
+            await QueueModel.findOneAndDelete({ name });
+
+            
+
+            return { success: true, message: 'Successfully DELETED Queue', code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to Delete Queue', deepLog: err, code: 400 }
         }
     }
 }

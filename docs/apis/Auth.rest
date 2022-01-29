@@ -30,3 +30,11 @@ Body: {
     },
     permissions: []
 }
+
+-------------------------
+
+Email Send
+
+POST localhost:5000/api/auth/send-email
+Content-type: application/json
+Authorization 

@@ -51,4 +51,11 @@ router.post('/createStepTwo/:queueName', [ authChecker ], queueController.stepTw
  */
  router.put('/createStepThree/:queueName', [ authChecker ], queueController.lastStepQueueCreation);
 
+/**
+ * Route for Delelete Queues
+ * 
+ */
+ router.delete('/:queueName', [ authChecker ], queueController.queueDelete);
+
+
 export = router

@@ -1,5 +1,6 @@
 import express from 'express';
 import { authController } from './index';
+import { authChecker } from '../_util/checkToken';
 
 const router = express.Router();
 
@@ -19,5 +20,10 @@ const router = express.Router();
   *  Route to register a user
   */
  router.post('/create', [], authController.register);
+
+  /**
+  *  Route to send email
+  */
+   router.post('/send-email', [ authChecker ], authController.emailSend);
  
  export = router;
