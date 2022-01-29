@@ -71,3 +71,12 @@ GET Windows
 GET localhost:5000/api/queue/windows/:queueName
 Authorization: // Insert Bearer Token
 Content-type: application/json
+
+
+------------------------
+
+DELETE Queue 
+
+DELETE localhost:5000/api/queue/:queueName
+Authorization: // Insert Bearer Token
+Content-type: application/json

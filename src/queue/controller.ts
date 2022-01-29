@@ -54,7 +54,14 @@ const windowsGet = async (req: Request, res: Response) => {
     sendResponse(res, result);
 } 
 
+// DELETE Queue
+const queueDelete = async (req: Request, res: Response) => {
+    let name = req.params.queueName;
+    let result: any = await queueService.deleteQueue(name);
+    sendResponse(res, result);
+}
+
 export default { stepOneQueueCreation, stepTwoQueueCreation, lastStepQueueCreation,
-    queueGetAll, queueGet, stationsGet, windowsGet }
+    queueGetAll, queueGet, stationsGet, windowsGet, queueDelete }
 
 
