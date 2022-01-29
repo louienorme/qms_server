@@ -18,4 +18,11 @@ const register = async (req: Request, res: Response) => {
     sendResponse(res, result);
 };
 
-export default { login, register };
+// Send Email
+const emailSend = async (req: Request, res: Response) => {
+    let body = req.body;
+    let result =  await authService.sendEmail(body);
+    sendResponse(res, result);
+};
+
+export default { login, register, emailSend };
