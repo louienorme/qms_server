@@ -5,7 +5,7 @@ export default interface IFlashboard extends Document {
     type: String;
     status: Boolean;
     queueName: String;
-    station: String;
+    station: number;
     username: String;
     password: String;
 }

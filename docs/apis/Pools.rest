@@ -76,3 +76,15 @@ body: {
     queueName: test,
     station: 2
 }
+
+------------------------
+
+Get Window Tickets
+
+POST localhost:5000/api/pools/getWindowTickets
+Authorization: // Insert Bearer Token
+Content-type: application/json 
+body: {
+    queueName: test,
+    station: 2
+}

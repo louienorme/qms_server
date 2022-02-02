@@ -27,8 +27,9 @@ class QueueService {
         if (isExisting) return { success: false, message: 'Queue name already exists!', code: 400 }
 
         try {
+            
             let queueId = `Q${faker.datatype.number(99999)}-${new Date().getFullYear()}`;
-
+            
             let queue = new QueueModel({ 
                 ...queueInfo, 
                 queueId, 
@@ -36,9 +37,9 @@ class QueueService {
                 status: true 
             });
             await queue.save();
-
             return { success: true, message: 'Queue Creation Step 1 Success', code: 200 }
         } catch (err) {
+            console.log(err)
             return { success: false, message: 'Queue Creation Step 1 Failed', deepLog: err, code: 400 }
         }
     }
@@ -155,7 +156,7 @@ class QueueService {
 
     async getWindows(queueName: string) {
         // Check if there are windows created
-        let isExisting = await WindowModel.find({ queueName });
+        let isExisting = await StationModel.find({ queueName });
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 }
 
@@ -171,7 +172,7 @@ class QueueService {
 
     async deleteQueue(name: string) {
         // Check if there are Queue created
-        let isExisting = await WindowModel.find({ queueName: name });
+        let isExisting = await QueueModel.find({ name });
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 }
 
@@ -182,8 +183,6 @@ class QueueService {
             await WindowAccountsModel.deleteMany({ queueName: name });
             await PoolsModel.deleteMany({ queue: name });
             await QueueModel.findOneAndDelete({ name });
-
-            
 
             return { success: true, message: 'Successfully DELETED Queue', code: 200 }
         } catch (err) {
