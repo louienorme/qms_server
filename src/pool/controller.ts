@@ -48,5 +48,12 @@ const ticketsGet = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
+// GET Station Tickets
+const windowTicketsGet = async ( req: Request, res: Response ) => {
+    let body = req.body 
+    let result: any = await poolsService.getWindowTickets(body);
+    sendResponse(res, result);
+}
+
 export default { numberCreate, numberNext, numberGet, 
-    numberReturn, numberCheck, ticketsGet };
+    numberReturn, numberCheck, ticketsGet, windowTicketsGet };

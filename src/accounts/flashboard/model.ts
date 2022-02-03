@@ -16,7 +16,7 @@ const FlashboardSchema: Schema = new Schema(
             type: String
         },
         station: {
-            type: String
+            type: Number
         },
         username: {
             type: String

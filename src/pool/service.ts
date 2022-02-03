@@ -329,11 +329,57 @@ class PoolsService {
 
         try {
 
-            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting' });
+            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting'});
 
             return { success: true, data: tickets, code: 200 }
         } catch (err) {
             return { success: false, message: 'FAILED to GET Tickets', code: 400 }
+        }
+    }
+
+    async getWindowTickets (details: any) {
+
+        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'transacting' });
+        
+        if (isEmpty.length === 0) return { success: true, data: [], message: 'Windows are Empty', code: 200 }
+
+        try {
+
+            let windowStatus: any = [];
+
+            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'transacting' });
+            let windows = await WindowAccountsModel.find({ queueName: details.queueName, station: details.station });
+
+            for( let i = 0; i < windows.length; i++ ) {
+                let number = 0;
+                let status = 'waiting'
+                tickets.forEach( ticket => {
+
+                    if(ticket.window === windows[i].window) {
+                        number = ticket.ticket
+                        status = ticket.status
+                    } 
+
+                    if(windows[i].status === 0) {
+                        status = 'inactive'
+                    }
+
+                })
+
+
+                let stat = {
+                    window: i + 1,
+                    ticket: number,
+                    status: status
+                }
+
+                windowStatus.push(stat)
+            }
+
+
+            return { success: true, data: windowStatus, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'FAILED to GET Window Tickets', code: 400 }
         }
     }
 
