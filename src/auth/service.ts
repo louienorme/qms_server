@@ -51,6 +51,16 @@ class AuthService {
 
             const newAdmin = new AdminModel(body);
             await newAdmin.save();
+
+            const emailContent = {
+                email: adminInfo.contact.email,
+                accountname: adminInfo.fullName.firstName,
+                username: adminId,
+                password: process.env.DEFAULT_PASSWORD
+            }
+
+            this.sendEmail(emailContent)
+
             return { success: true, data: newAdmin, code: 201, message: 'Account Creation Successful' };
 
         } catch (error) {
@@ -104,24 +114,40 @@ class AuthService {
         }
     }
 
-    async sendEmail(email:any) {
+    async sendEmail( info: any ) {
 
-        sgMail.setApiKey(process.env.API_KEY);
-        
+        // Test API
+
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+           
         try{
             const message = {
-                to: email,
-                from: {name: 'QUEUE MANAGER', email: 'verkiperta@vusra.com'},
-                subject: 'Hello',
-                text: 'Hello Eric!',
-                html: '<h1>Hello Eric HAHA!</h1>',
+                to: info.email,
+                from: {name: 'Queue Management System', email: 'emailservice.qms@gmail.com'},
+                subject: 'Account Creation',
+                text: 'Hello',
+                html: `<html>
+                            <div>
+                                <p>Hi ${info.accountname}!</p> 
+                                <p>Here are your designated credentials in order to use the Queue Management System</p>    
+                                <ul>
+                                    <li>Username: ${info.username} </li>
+                                    <li>Password: ${info.password}</li>
+                                </ul>
+                                <p>Please contact us thru this email for any concerns</p>
+                                <br/>
+                                <p>Have a great day!</p>
+                                <br/>
+                                <p>Administrator</p>
+                            </div>
+                        </html>`,
             };
 
             sgMail.send(message)
-            return { success: true, code: 201, message: 'Login Successful' };
+            return { success: true, code: 201, message: 'Email Sent Successfully' };
                 
         }catch (error) {
-            return { success: false, message: 'Login Failed', deepLog: error, code: 400 };
+            return { success: false, message: 'Email Sending Failed', deepLog: error, code: 400 };
         }
     }
 

@@ -6,8 +6,11 @@ POST localhost:5000/api/queue/createStepOne
 Authorization: // Insert Bearer Token
 Content-type: application/json
 Body: {
-    'name' : 'name',
-    'admin' : []
+    queueId: '',
+    name: '',
+    status: true,
+    numOfStations: 0,
+    admin: []
 }
 
 ------------------------
@@ -77,6 +80,6 @@ Content-type: application/json
 
 DELETE Queue 
 
-DELETE localhost:5000/api/queue/:queueName
+DELETE localhost:5000/api/queue/delete/:queueName
 Authorization: // Insert Bearer Token
 Content-type: application/json

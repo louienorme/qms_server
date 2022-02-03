@@ -7,7 +7,7 @@ export default interface IPool extends Document {
     queue: String;
     station: Number;
     window: Number;
-    status: String;
+    status: string;
     timeStarted: String;
     timeEnded: String;
     createdBy: String;

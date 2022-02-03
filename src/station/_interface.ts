@@ -4,8 +4,8 @@ export default interface IStation extends Document {
     stationId: String,
     queueName: String,
     status: Boolean,
-    stationNumber: String,
-    numOfWindows: Number,
+    stationNumber: number,
+    numOfWindows: number,
     name: String,
     admin: Array<String>
 }
