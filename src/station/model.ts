@@ -13,7 +13,7 @@ const StationSchema: Schema = new Schema(
             type: Boolean
         },
         stationNumber: {
-            type: String
+            type: Number
         },
         numOfWindows: {
             type: Number
