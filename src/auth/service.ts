@@ -106,7 +106,7 @@ class AuthService {
 
     async sendEmail(email:any) {
 
-        sgMail.setApiKey(process.env.API_KEY);
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         
         try{
             const message = {
@@ -114,14 +114,14 @@ class AuthService {
                 from: {name: 'QUEUE MANAGER', email: 'verkiperta@vusra.com'},
                 subject: 'Hello',
                 text: 'Hello Eric!',
-                html: '<h1>Hello Eric HAHA!</h1>',
+                html: '<h1>Hello Eric I am fixed!</h1>',
             };
 
             sgMail.send(message)
-            return { success: true, code: 201, message: 'Login Successful' };
+            return { success: true, code: 201, message: 'Email Sent Successfully' };
                 
         }catch (error) {
-            return { success: false, message: 'Login Failed', deepLog: error, code: 400 };
+            return { success: false, message: 'Email Sending Failed', deepLog: error, code: 400 };
         }
     }
 
