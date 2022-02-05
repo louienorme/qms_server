@@ -3,7 +3,7 @@ import IArchive from './_interface'
 
 const ArchiveSchema: Schema = new Schema(
     {
-        archiveId: {
+        poolId: {
             type: String
         },
         ticket: {
