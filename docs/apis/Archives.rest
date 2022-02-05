@@ -5,3 +5,15 @@ GET ALL Archives
 GET localhost:5000/api/archives/
 Authorization: // Insert Bearer Token
 Content-type: application/json
+
+------------------------
+
+Get Data for Station One
+
+POST localhost:5000/api/archives/station-one
+Authorization: // Insert Bearer Token
+Content-type: application/json
+body: {
+    queueName,
+    _id
+}

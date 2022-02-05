@@ -75,7 +75,7 @@ class PoolsService {
 
                 let record = new ArchiveModel({
                     poolId,
-                    ticket: 1,
+                    ticket: maxNum + 1,
                     queue: queueName,
                     user: '',
                     station: 1,
