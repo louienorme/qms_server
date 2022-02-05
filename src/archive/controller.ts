@@ -11,4 +11,11 @@ const getAll = async ( req: Request, res: Response ) => {
     sendResponse(res, result);
 }
 
-export default { getAll }
+// GET Data for Station One
+const getStationOne = async ( req: Request, res: Response ) => {
+    let body = req.body
+    let result = await archiveService.getStationOneData(body);
+    sendResponse(res, result);
+}
+
+export default { getAll, getStationOne }
