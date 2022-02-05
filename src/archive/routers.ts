@@ -16,4 +16,11 @@ const router = express.Router();
  */
  router.get('/', [ authChecker ], archiveController.getAll);
 
+ /**
+ * Route to GET Data for Station 1 Windows
+ * 
+ *
+ */
+  router.post('/station-one', [ authChecker ], archiveController.getStationOne);
+
  export = router;

@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 
 export default interface IArchive extends Document {
-    archiveId: String;
+    poolId: String;
     ticket: number;
     queue: String;
     station: String;
