@@ -142,7 +142,7 @@ class QueueService {
         // Check if there are stations created
         let isExisting = await StationModel.find({ queueName });
         // Return if none exists
-        if (!isExisting) return { success: true, data: [], code: 200 }
+        if (!isExisting) return { success: false, data: [], code: 400 }
 
         try {
             

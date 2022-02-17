@@ -353,11 +353,13 @@ class PoolsService {
             for( let i = 0; i < windows.length; i++ ) {
                 let number = 0;
                 let status = 'waiting'
+                let timeStarted = '00:00:00'
                 tickets.forEach( ticket => {
 
                     if(ticket.window === windows[i].window) {
                         number = ticket.ticket
                         status = ticket.status
+                        timeStarted = ticket.timeStarted
                     } 
 
                     if(windows[i].status === 0) {
@@ -368,9 +370,12 @@ class PoolsService {
 
 
                 let stat = {
+                    queue: details.queueName,
+                    station: details.station,
                     window: i + 1,
                     ticket: number,
-                    status: status
+                    status,
+                    timeStarted
                 }
 
                 windowStatus.push(stat)
