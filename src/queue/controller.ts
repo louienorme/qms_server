@@ -47,6 +47,20 @@ const stationsGet = async (req: Request, res: Response) => {
     sendResponse(res, result);
 } 
 
+// GET Stations
+const adminStationsGet = async (req: Request, res: Response) => {
+    let id = req.params.id;
+    let result: any = await queueService.getAdminStations(id);
+    sendResponse(res, result);
+} 
+
+// GET Stations
+const windowStationsGet = async (req: Request, res: Response) => {
+    let id = req.params.id;
+    let result: any = await queueService.getWindowStations(id);
+    sendResponse(res, result);
+} 
+
 // GET Windows
 const windowsGet = async (req: Request, res: Response) => {
     let name = req.params.queueName;
@@ -62,6 +76,7 @@ const queueDelete = async (req: Request, res: Response) => {
 }
 
 export default { stepOneQueueCreation, stepTwoQueueCreation, lastStepQueueCreation,
-    queueGetAll, queueGet, stationsGet, windowsGet, queueDelete }
+    queueGetAll, queueGet, stationsGet, adminStationsGet, windowsGet, queueDelete,
+    windowStationsGet }
 
 

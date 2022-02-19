@@ -28,6 +28,18 @@ router.get('/:queueName', [ authChecker ], queueController.queueGet);
 router.get('/stations/:queueName', [ authChecker ], queueController.stationsGet);
 
  /**
+ * Route to GET All Stations assigned to a Station Admin
+ * 
+ */
+  router.get('/stations/admin/:id', [ authChecker ], queueController.adminStationsGet);
+
+/**
+ * Route to GET All Station Windos assigned to a Station Admin
+ * 
+ */
+ router.get('/stations/windows/:id', [ authChecker ], queueController.windowStationsGet);
+
+ /**
  * Route to GET Windows within a Queue
  * 
  */

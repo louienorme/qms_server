@@ -21,7 +21,7 @@ class PoolsService {
 
         try {
 
-            let isEmpty = await PoolsModel.find();
+            let isEmpty = await PoolsModel.find({ queue: queueName });
             let poolId = `T${new Date().getFullYear()}-${faker.datatype.number(99999)}`;
 
             if (isEmpty.length === 0) {
@@ -56,7 +56,7 @@ class PoolsService {
             }
             else {
 
-                let max = await PoolsModel.find().sort({ ticket: -1 }).limit(1);
+                let max = await PoolsModel.find({ queue: queueName }).sort({ ticket: -1 }).limit(1);
                 let maxNum = max[0].ticket;
 
                 let tickets = new PoolsModel({
@@ -339,7 +339,7 @@ class PoolsService {
 
     async getWindowTickets (details: any) {
 
-        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'transacting' });
+        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station, });
         
         if (isEmpty.length === 0) return { success: true, data: [], message: 'Windows are Empty', code: 200 }
 
@@ -347,17 +347,19 @@ class PoolsService {
 
             let windowStatus: any = [];
 
-            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'transacting' });
+            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station,});
             let windows = await WindowAccountsModel.find({ queueName: details.queueName, station: details.station });
 
             for( let i = 0; i < windows.length; i++ ) {
                 let number = 0;
                 let status = 'waiting'
+                let timeStarted = '00:00:00'
                 tickets.forEach( ticket => {
 
                     if(ticket.window === windows[i].window) {
                         number = ticket.ticket
                         status = ticket.status
+                        timeStarted = ticket.timeStarted
                     } 
 
                     if(windows[i].status === 0) {
@@ -368,9 +370,12 @@ class PoolsService {
 
 
                 let stat = {
+                    queue: details.queueName,
+                    station: details.station,
                     window: i + 1,
                     ticket: number,
-                    status: status
+                    status,
+                    timeStarted
                 }
 
                 windowStatus.push(stat)
