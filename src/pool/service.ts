@@ -339,7 +339,7 @@ class PoolsService {
 
     async getWindowTickets (details: any) {
 
-        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'transacting' });
+        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station, });
         
         if (isEmpty.length === 0) return { success: true, data: [], message: 'Windows are Empty', code: 200 }
 
@@ -347,7 +347,7 @@ class PoolsService {
 
             let windowStatus: any = [];
 
-            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'transacting' });
+            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station,});
             let windows = await WindowAccountsModel.find({ queueName: details.queueName, station: details.station });
 
             for( let i = 0; i < windows.length; i++ ) {
