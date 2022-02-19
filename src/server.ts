@@ -37,7 +37,7 @@ const port = process.env.PORT || 5000;
 const runServer = async () => {
     console.clear();
     console.log(
-        "This is the Queue Management System Backend Server by Enorme, John Loui \n"
+        "This is the Queue Management System Backend Server by Enorme, John Loui and Ang, Eric Geo \n"
     );
 
     if (await dbConnect()) {

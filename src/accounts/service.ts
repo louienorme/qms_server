@@ -66,13 +66,13 @@ class AccountService {
 
     async getAccounts(type: string) {
         // Find if there is any account that exists
-        let isExisting = await AdminModel.find({ adminType: type })
+        let isExisting = await AdminModel.find({ type })
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 };
 
         try {
 
-            let accounts = await AdminModel.find({ adminType: type });
+            let accounts = await AdminModel.find({ type });
 
             return { success: true, data: accounts, code: 200 }
         } catch (err) {

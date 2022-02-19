@@ -44,6 +44,7 @@ class AuthService {
         try {
             const body = {
                 ...adminInfo,
+                username: adminId,
                 adminId,
                 type: adminInfo.adminType,
                 status: true

@@ -8,7 +8,7 @@ export default interface IPool extends Document {
     station: Number;
     window: Number;
     status: string;
-    timeStarted: String;
-    timeEnded: String;
+    timeStarted: string;
+    timeEnded: string;
     createdBy: String;
 }

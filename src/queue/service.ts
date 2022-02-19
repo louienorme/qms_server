@@ -7,8 +7,7 @@ import { PoolsModel } from "../pool"
 import QueueModel from './model';
 import StationModel from '../station/model';
 import WindowModel from '../window/model';
-import BranchModel from '../branch/model';
-import { StringUnitLength } from 'luxon';
+import ArchiveModel from '../archive/model';
 
 /**
  * Module Queue
@@ -95,7 +94,6 @@ class QueueService {
                         status: true,
                         windowNumber: count
                     })
-                    console.log(window);
                     await window.save();
                 }
             });
@@ -142,7 +140,7 @@ class QueueService {
         // Check if there are stations created
         let isExisting = await StationModel.find({ queueName });
         // Return if none exists
-        if (!isExisting) return { success: true, data: [], code: 200 }
+        if (!isExisting) return { success: false, data: [], code: 400 }
 
         try {
             
@@ -151,6 +149,63 @@ class QueueService {
             return { success: true, data: stations, code: 200 }
         } catch (err) {
             return { success: false, message: 'Failed to GET Stations', deepLog: err, code: 400 }
+        }
+    }
+
+    async getAdminStations(id: string) {
+        // Check if there are stations created
+        let isExisting = await AdminModel.find({ adminId: id });
+        // Return if none exists
+        if (!isExisting) return { success: false, message: 'Admin does not exists' , code: 400 }
+
+        try {
+            
+            let stations = await StationModel.find({ admin: { $in: [ id ] } });
+
+            return { success: true, data: stations, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to GET Admin Stations', deepLog: err, code: 400 }
+        }
+    }
+
+    async getWindowStations(id: string) {
+        // Check if there are stations created
+        let isExisting = await AdminModel.find({ adminId: id });
+        // Return if none exists
+        if (!isExisting) return { success: false, message: 'Admin does not exists' , code: 400 }
+
+        try {
+            
+            let windowArray = [];
+
+            let stations = await StationModel.find({ admin: { $in: [ id ] } });
+
+            // initial Details
+            for (let i = 0; i < stations.length; i++) {
+
+
+                for (let j = 0; j < stations[i].numOfWindows; j++) {
+
+                    let windows = await WindowAccountsModel.find({  
+                        queueName: stations[i].queueName, 
+                        station: stations[i].stationNumber,
+                        window: j + 1 
+                    })
+
+                    let pools = await PoolsModel.find({  
+                        queue: stations[i].queueName, 
+                        station: stations[i].stationNumber,
+                        window: j + 1 
+                    })
+
+                    windowArray.push({ windowState: { windows, poolsData: pools}})
+                }
+
+            }
+
+            return { success: true, data: windowArray, code: 200 }
+        } catch (err) {
+            return { success: false, message: 'Failed to GET Window Stations', deepLog: err, code: 400 }
         }
     }
 
@@ -182,7 +237,8 @@ class QueueService {
             await FlashboardModel.deleteMany({ queueName: name });
             await WindowAccountsModel.deleteMany({ queueName: name });
             await PoolsModel.deleteMany({ queue: name });
-            await QueueModel.findOneAndDelete({ name });
+            await QueueModel.findOneAndDelete({ name }); 
+            await ArchiveModel.deleteMany({ queue: name });
 
             return { success: true, message: 'Successfully DELETED Queue', code: 200 }
         } catch (err) {
