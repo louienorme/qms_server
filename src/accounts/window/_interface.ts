@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 export default interface IWindowAccount extends Document {
     adminId: String;
     type: String;
-    status: Number;
+    status: number;
     queueName: String;
     station: Number;
     window: Number;
