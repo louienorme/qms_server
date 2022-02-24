@@ -178,30 +178,48 @@ class QueueService {
             
             let windowArray = [];
 
-            let stations = await StationModel.find({ admin: { $in: [ id ] } });
-
+            let stations: any = await StationModel.find({ admin: { $in: [ id ] } });
+           
             // initial Details
             for (let i = 0; i < stations.length; i++) {
 
 
                 for (let j = 0; j < stations[i].numOfWindows; j++) {
 
-                    let windows = await WindowAccountsModel.find({  
+                    let windows: any = await WindowAccountsModel.find({  
                         queueName: stations[i].queueName, 
                         station: stations[i].stationNumber,
                         window: j + 1 
                     })
 
-                    let pools = await PoolsModel.find({  
+                    let pools: any = await PoolsModel.find({  
                         queue: stations[i].queueName, 
                         station: stations[i].stationNumber,
                         window: j + 1 
                     })
 
-                    windowArray.push({ windowState: { windows, poolsData: pools}})
-                }
+                    let ticket = 0;
+                    let timeStarted = 'N/A'
 
+                    if (pools.length !== 0 ) {
+                        ticket = pools[j].ticket
+                        timeStarted = pools[j].timeStarted
+                    }
+
+                    let body = {
+                        queueName: stations[i].queueName, 
+                        station: stations[i].stationNumber,
+                        window: j + 1,
+                        ticket,
+                        status: windows[0].status,
+                        timeStarted
+                    }
+                    
+                    windowArray.push(body)
+                }
+                
             }
+            
 
             return { success: true, data: windowArray, code: 200 }
         } catch (err) {
