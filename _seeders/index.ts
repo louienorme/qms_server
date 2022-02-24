@@ -18,9 +18,6 @@ export async function clearAccounts(): Promise<void> {
 export async function seedAccounts() {
     console.log('Seeding Data...');
 
-    await PermissionSeed();
-    console.log('\tSeeding Permissions now...')
-
     await AdministratorAccountSeed();
     console.log('\tSeeding Admin Accounts now...')
 }
