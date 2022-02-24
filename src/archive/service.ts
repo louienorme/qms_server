@@ -29,9 +29,9 @@ class ArchiveService {
 
     async getStationOneData (info: any) {
 
-        let isEmpty = await ArchiveModel.find({ queue: info.queueName });
+        let isEmpty = await PoolsModel.find({ queue: info.queueName });
 
-        if (isEmpty.length === 0) return { success: true, data: [], code: 200 }
+        if (isEmpty.length === 0) return { success: true, message: 'Pools is Empty!', code: 200 }
 
         try {  
 
@@ -47,7 +47,7 @@ class ArchiveService {
                 recentNumbers
             }
 
-            return { succesS: true, data: response, code: 200 }
+            return { success: true, data: response, code: 200 }
         } catch (err) {
             return { success: false, message: 'Failed to GET Station One Data', deepLog: err, code: 400 }
         }
