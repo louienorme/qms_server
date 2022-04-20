@@ -4,6 +4,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import dbConnect from './_config/dbConnect';
+import speedLimiter from './_util/speedLimiter';
+import rateLimiter from './_util/rateLimiter';
 
 // Routes
 import authRoutes from  './auth/routers';
@@ -18,6 +20,13 @@ dotenv.config()
 // Create Server
 const app : Application = express();
 const server = http.createServer(app);
+
+// Limiters
+if (process.env.NODE_ENV === 'production') {
+	app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
+}
+app.use(speedLimiter)
+app.use(rateLimiter)
 
 // Enables to handle json requests
 app.use(cors());
