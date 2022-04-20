@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/FreshMaker-L/qms_server#readme",
   "dependencies": {
-    "@sendgrid/mail": "^7.6.0",
+    "@sendgrid/mail": "^7.6.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -32,7 +32,8 @@
     "jsonwebtoken": "^8.5.1",
     "luxon": "^2.3.0",
     "mongoose": "^5.12.7",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "twilio": "^3.76.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
