@@ -25,5 +25,10 @@ const router = express.Router();
   *  Route to send email
   */
    router.post('/send-email', [ authChecker ], authController.emailSend);
+
+  /**
+  *  Route to send text
+  */
+   router.post('/send-text', [ authChecker ], authController.textSend);
  
  export = router;

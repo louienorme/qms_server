@@ -3,9 +3,15 @@ import jwt from 'jsonwebtoken';
 import bscryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
 import faker from 'faker';
+const express = require('express');
 const sgMail = require('@sendgrid/mail');
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')('AC07a53648f130e426823985b9ea8b014b', '7ec34e8f9c3ba3d918d9031dfd9cdaea');
 // Models
 import { AdminModel, FlashboardModel, WindowAccountsModel } from '../accounts';
+import { number } from 'joi';
 
 dotenv.config();
 
@@ -149,6 +155,21 @@ class AuthService {
                 
         }catch (error) {
             return { success: false, message: 'Email Sending Failed', deepLog: error, code: 400 };
+        }
+    }
+
+    async sendText( info: any ) {
+
+        try{
+            client.messages.create({
+                body: 'This is my first text message from twilio',
+                from: '+19803032319',
+                to: info.text
+              })
+            return { success: true, code: 201, message: 'Text Sent Successfully' };
+                
+        }catch (error) {
+            return { success: false, message: 'Text Sending Failed', deepLog: error, code: 400 };
         }
     }
 
