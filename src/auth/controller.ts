@@ -25,4 +25,11 @@ const emailSend = async (req: Request, res: Response) => {
     sendResponse(res, result);
 };
 
-export default { login, register, emailSend };
+// Send Text
+const textSend = async (req: Request, res: Response) => {
+    let body = req.body;
+    let result =  await authService.sendText(body);
+    sendResponse(res, result);
+};
+
+export default { login, register, emailSend, textSend };
