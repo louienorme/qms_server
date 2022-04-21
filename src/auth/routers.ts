@@ -30,5 +30,10 @@ const router = express.Router();
   *  Route to send text
   */
    router.post('/send-text', [ authChecker ], authController.textSend);
+
+ /**
+  *  Route to get Dashboard Data
+  */
+  router.get('/data', [ authChecker ], authController.getDashboardData);
  
  export = router;

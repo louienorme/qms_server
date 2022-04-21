@@ -32,4 +32,11 @@ const textSend = async (req: Request, res: Response) => {
     sendResponse(res, result);
 };
 
-export default { login, register, emailSend, textSend };
+// Get Dashboard Data
+const getDashboardData = async (req: Request, res: Response) => {
+    let result =  await authService.getData();
+    sendResponse(res, result);
+};
+
+
+export default { login, register, emailSend, textSend, getDashboardData };
