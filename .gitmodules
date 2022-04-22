@@ -1,0 +1,3 @@
+[submodule "qms_client"]
+	path = qms_client
+	url = https://github.com/FreshMaker-L/qms_client

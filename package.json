@@ -4,8 +4,11 @@
   "description": "qms-server built in MERN",
   "main": "server.ts",
   "scripts": {
-    "start": "yarn eslint && ts-node ./src/server.ts",
-    "dev": "nodemon ./src/server.ts",
+    "start": "yarn run eslint && ts-node ./src/server.ts",
+    "server": "nodemon ./src/server.ts",
+    "client": "cd qms_client && yarn start",
+    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+    "heroku-postbuild": "YARN_PRODUCTION=false cd qms_client && yarn && yarn run build",
     "build": "tsc",
     "seed": "ts-node bin/seed.ts",
     "seed:safe": "ts-node bin/seed:safe.ts"
@@ -25,6 +28,7 @@
     "@types/express-rate-limit": "^6.0.0",
     "@types/express-slow-down": "^1.3.2",
     "bcryptjs": "^2.4.3",
+    "concurrently": "^7.1.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
