@@ -4,11 +4,8 @@
   "description": "qms-server built in MERN",
   "main": "server.ts",
   "scripts": {
-    "start": "yarn run eslint && ts-node ./src/server.ts",
-    "server": "nodemon ./src/server.ts",
-    "client": "cd qms_client && yarn start",
-    "dev": "concurrently \"yarn run server\" \"yarn run client\"",
-    "heroku-postbuild": "YARN_PRODUCTION=false cd qms_client && yarn && yarn run build",
+    "start": "yarn eslint && ts-node ./src/server.ts",
+    "dev": "nodemon ./src/server.ts",
     "build": "tsc",
     "seed": "ts-node bin/seed.ts",
     "seed:safe": "ts-node bin/seed:safe.ts"
