@@ -20,7 +20,6 @@ dotenv.config()
 // Create Server
 const app : Application = express();
 const server = http.createServer(app);
-const path = require("path");
 
 // Limiters
 if (process.env.NODE_ENV === 'production') {
@@ -40,16 +39,6 @@ app.use('/api/accounts', accountRoutes);
 app.use('/api/queue', queueRoutes);
 app.use('/api/pools', poolRoutes);
 app.use('/api/archives', archiveRoutes);
-
-// Serve static assets if in production
-if(process.env.NODE_ENV === 'production') {
-	// Set static folder
-	app.use(express.static('qms_client/build'));
-
-	app.get('*', (req, res) => {
-		res.sendFile(path.resolve('qms_client', 'build', 'index.html'));
-	})
-}
 
 // Run App
 const port = process.env.PORT || 5000;
