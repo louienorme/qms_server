@@ -25,8 +25,8 @@ const server = http.createServer(app);
 if (process.env.NODE_ENV === 'production') {
 	app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
 }
-app.use(speedLimiter)
-app.use(rateLimiter)
+// app.use(speedLimiter)
+// app.use(rateLimiter)
 
 // Enables to handle json requests
 app.use(cors());

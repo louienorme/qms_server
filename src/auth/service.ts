@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import bscryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
 import faker from 'faker';
-const express = require('express');
 const sgMail = require('@sendgrid/mail');
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
@@ -11,7 +10,8 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')('AC07a53648f130e426823985b9ea8b014b', '7ec34e8f9c3ba3d918d9031dfd9cdaea');
 // Models
 import { AdminModel, FlashboardModel, WindowAccountsModel } from '../accounts';
-import { number } from 'joi';
+import ArchiveModel from '../archive/model'
+import QueueModel from '../queue/model'
 
 dotenv.config();
 
@@ -170,6 +170,23 @@ class AuthService {
                 
         }catch (error) {
             return { success: false, message: 'Text Sending Failed', deepLog: error, code: 400 };
+        }
+    }
+
+    async getData() {
+        try {
+            
+            let activeQueues = await QueueModel.find({ status: true })
+            let archiveData = await ArchiveModel.distinct('ticket').find();
+
+            const toSend = {
+                activeQueues,
+                archiveData
+            }
+
+            return { success: true, data: toSend, code: 201, message: 'Data retrieved successfully' };    
+        } catch (error) {
+            return { success: false, message: 'FAILED TO GET Dashboard Data', deepLog: error, code: 400 };
         }
     }
 
