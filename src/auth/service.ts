@@ -205,13 +205,13 @@ class AuthService {
                 }
 
                 // @ts-ignore
-                averageDuration = Duration.fromObject({ seconds: sum/durationArray.length + 1 })
+                averageDuration = Duration.fromObject({ seconds: sum/durationArray.length })
                     .shiftTo('hours','minutes','seconds')
                     .toObject();
             } 
 
-            let averageTicketsCompleted = ticketCreated.length + 1 / activeQueues.length + 1; 
-            
+            let averageTicketsCompleted = ticketCreated.length / activeQueues.length; 
+        
             let toSend = {
                 activeQueues,
                 ticketCreated,
