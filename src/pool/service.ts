@@ -7,6 +7,10 @@ import { WindowAccountsModel } from '../accounts';
 import ArchiveModel from '../archive/model';
 import { QueueModel } from '../queue';
 
+import AuthService from '../auth/service';
+
+const authService = new AuthService();
+
 /**
  * Module Pools
  * Queue Process service
@@ -30,6 +34,7 @@ class PoolsService {
                     poolId,
                     ticket: 1,
                     queue: queueName,
+                    contact: body.contact,
                     user: '',
                     station: 2,
                     window: 0,
@@ -64,6 +69,7 @@ class PoolsService {
                     ticket: maxNum + 1,
                     queue: queueName,
                     user: '',
+                    contact: body.contact,
                     station: 2,
                     window: 0,
                     status: 'waiting',
@@ -143,6 +149,7 @@ class PoolsService {
                 poolId: getTicket[0].poolId,
                 ticket: getTicket[0].ticket,
                 user: getTicket[0].user,
+                contact: getTicket[0].contact,
                 queue: details.queueName,
                 station: details.station,
                 window: details.window,
@@ -171,6 +178,13 @@ class PoolsService {
 
             let storeTicket = new ArchiveModel(archiveTicket);
             storeTicket.save();
+
+            let sendText = {
+                contact: getTicket[0].contact,
+                text: `Greetings! We would like to notify you that your number is currently being served at Station ${details.station} Window ${details.window}! - This message is from the Queue Management System`
+            }
+
+            authService.sendText(sendText)
 
             return { success: true, message: 'GET Ticket Successful', code: 200 }
         } catch (err) {
@@ -208,6 +222,7 @@ class PoolsService {
                     poolId: ticket.poolId,
                     ticket: ticket.ticket,
                     user: ticket.user,
+                    contact: ticket.contact,
                     queue: details.queueName,
                     station: details.station + 1,
                     window: 0,
@@ -267,6 +282,7 @@ class PoolsService {
                 poolId: ticket.poolId,
                 ticket: ticket.ticket,
                 user: ticket.user,
+                contact: ticket.contact,
                 queue: details.queueName,
                 station: details.station,
                 window: 0,

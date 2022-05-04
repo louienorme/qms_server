@@ -1,5 +1,5 @@
 // Dependencies
-import bcryptjs from 'bcryptjs';
+import bcryptjs, { compareSync } from 'bcryptjs';
 import faker from 'faker';
 
 // Models
@@ -220,7 +220,6 @@ class AccountService {
             return { success: false, message: 'Failed to CREATE Window Accounts', deepLog: err, code: 400 }
         }
     }
-
 }
 
 export default AccountService;
