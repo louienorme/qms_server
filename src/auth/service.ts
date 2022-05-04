@@ -160,9 +160,9 @@ class AuthService {
     async sendText( info: any ) {
         try{
             client.messages.create({
-                body: 'This is my first text message from twilio',
+                body: info.text,
                 from: '+19803032319',
-                to: info.text
+                to: info.contact
               })
             return { success: true, code: 201, message: 'Text Sent Successfully' };
                 

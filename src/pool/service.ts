@@ -7,6 +7,10 @@ import { WindowAccountsModel } from '../accounts';
 import ArchiveModel from '../archive/model';
 import { QueueModel } from '../queue';
 
+import AuthService from '../auth/service';
+
+const authService = new AuthService();
+
 /**
  * Module Pools
  * Queue Process service
@@ -174,6 +178,13 @@ class PoolsService {
 
             let storeTicket = new ArchiveModel(archiveTicket);
             storeTicket.save();
+
+            let sendText = {
+                contact: getTicket[0].contact,
+                text: `Greetings! We would like to notify you that your number is currently being served at Station ${details.station} Window ${details.window}! - This message is from the Queue Management System`
+            }
+
+            authService.sendText(sendText)
 
             return { success: true, message: 'GET Ticket Successful', code: 200 }
         } catch (err) {
