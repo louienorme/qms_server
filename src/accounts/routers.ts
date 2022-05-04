@@ -73,5 +73,4 @@ router.put('/flashboards-create/:queueName', [ authChecker ], accountController.
  */
 router.put('/windows-create/:queueName', [ authChecker ], accountController.createWA);
 
-
  export = router;

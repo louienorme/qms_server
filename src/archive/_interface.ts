@@ -8,7 +8,7 @@ export default interface IArchive extends Document {
     window: String;
     user: String;
     action: String;
-    timeStart: String;
-    timeEnd: String;
+    timeStarted: String;
+    timeEnded: String;
     createdBy: String;
 }

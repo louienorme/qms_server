@@ -70,3 +70,7 @@ PUT localhost: 5000/api/accounts/delete/:adminId
 Authorization: // Insert Bearer Token
 Content-type: application/json
 
+
+
+
+

@@ -37,7 +37,13 @@ Email Send
 
 POST localhost:5000/api/auth/send-email
 Content-type: application/json
-Authorization 
+Authorization: // Insert Bearer Token
+Body: {
+    "email" : "louienorme@gmail.com",
+    "accountname" : "Loui",
+    "username" : "ArchonQA",
+    "password" : "queue123",
+}
 
 -------------------------
 
@@ -45,4 +51,9 @@ Text Send
 
 POST localhost:5000/api/auth/send-text
 Content-type: application/json
-Authorization 
+Authorization: // Insert Bearer Token
+Body: {
+   "contact" : "09993428400",
+
+}
+

@@ -5,13 +5,12 @@ import dotenv from 'dotenv';
 import faker from 'faker';
 const sgMail = require('@sendgrid/mail');
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')('AC07a53648f130e426823985b9ea8b014b', '7ec34e8f9c3ba3d918d9031dfd9cdaea');
 // Models
 import { AdminModel, FlashboardModel, WindowAccountsModel } from '../accounts';
 import ArchiveModel from '../archive/model'
 import QueueModel from '../queue/model'
+import { DateTime, Duration } from 'luxon';
 
 dotenv.config();
 
@@ -159,12 +158,11 @@ class AuthService {
     }
 
     async sendText( info: any ) {
-
         try{
             client.messages.create({
-                body: 'This is my first text message from twilio',
+                body: info.text,
                 from: '+19803032319',
-                to: info.text
+                to: info.contact
               })
             return { success: true, code: 201, message: 'Text Sent Successfully' };
                 
@@ -176,14 +174,52 @@ class AuthService {
     async getData() {
         try {
             
-            let activeQueues = await QueueModel.find({ status: true })
-            let archiveData = await ArchiveModel.distinct('ticket').find();
+            let activeQueues: any = await QueueModel.find({ status: true })
+            let ticketCreated: any = await ArchiveModel.distinct('ticket').find({ action: 'created' });
+            let totalReturns: any = await ArchiveModel.distinct('ticket').find({ action: 'returned' });
+            let totalCompleted: any = await ArchiveModel.distinct('ticket').find({ action: 'complete' });
+            let durations: any = await ArchiveModel.find({ action: { $nin: ['created', 'acquired']  } },{ timeStarted: 1, timeEnded: 1 });
+            
+            let averageDuration = { hours: 0, minutes: 0, seconds: 0 }
+            // Finding the Average Transaction Time Algorithm
+            if (durations.length != 0) {
+                let durationArray = [];
 
-            const toSend = {
+                for (let i = 0; i < durations.length; i++) {
+
+                    // @ts-ignore
+                    let start = DateTime.fromISO(durations[i].timeStarted);
+                    // @ts-ignore
+                    let end = DateTime.fromISO(durations[i].timeEnded);
+                    let timeDiff = end.diff(start, ['hours',  'minutes', 'seconds']).toObject();
+                    let duration = Duration.fromObject(timeDiff);
+
+                    durationArray.push(duration.as('seconds'));
+                }   
+
+                let sum = 0;
+
+                for (let j = 0; j < durationArray.length; j++) { 
+                    
+                    sum = sum + durationArray[j]
+                }
+
+                // @ts-ignore
+                averageDuration = Duration.fromObject({ seconds: sum/durationArray.length })
+                    .shiftTo('hours','minutes','seconds')
+                    .toObject();
+            } 
+
+            let averageTicketsCompleted = ticketCreated.length / activeQueues.length; 
+        
+            let toSend = {
                 activeQueues,
-                archiveData
+                ticketCreated,
+                totalReturns,
+                totalCompleted,
+                averageDuration,
+                averageTicketsCompleted,
             }
-
             return { success: true, data: toSend, code: 201, message: 'Data retrieved successfully' };    
         } catch (error) {
             return { success: false, message: 'FAILED TO GET Dashboard Data', deepLog: error, code: 400 };
