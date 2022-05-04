@@ -13,7 +13,7 @@ const router = express.Router();
  * Route to Create Ticket
  *
  */
-router.put('/getTicket/:queueName', [ authChecker ], poolsController.numberCreate);
+router.post('/getTicket/:queueName', [ authChecker ], poolsController.numberCreate);
 
 /**
  * Route to Get a Ticket from Pools
