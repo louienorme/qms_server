@@ -12,6 +12,9 @@ const PoolSchema: Schema = new Schema(
         user: {
             type: String
         },
+        contact: {
+            type: String
+        },
         queue: {
             type: String
         },

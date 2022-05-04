@@ -4,6 +4,7 @@ export default interface IPool extends Document {
     poolId: String;
     ticket: number;
     user: String;
+    contact: String;
     queue: String;
     station: Number;
     window: Number;
