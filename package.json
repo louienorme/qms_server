@@ -4,9 +4,9 @@
   "description": "qms-server built in MERN",
   "main": "server.ts",
   "scripts": {
-    "start": "yarn eslint && ts-node ./src/server.ts",
-    "start:dev": "nodemon ./src/server.ts",
-    "start:prod": "node -r ts-node/register/transpile-only -r tsconfig-paths/register ./src/server.ts",
+    "start": "node ./build/src/server.js",
+    "start:dev": "nodemon ./src/server.ts" ,
+    "start:prod": "node -r ts-node/register/transpile-only -r tsconfig-paths/register ./build/src/server.js",
     "build": "tsc",
     "seed": "ts-node -r tsconfig-paths/register bin/seed.ts",
     "seed:safe": "ts-node -r tsconfig-paths/register bin/seed:safe.ts"
