@@ -25,7 +25,7 @@ class PoolsService {
 
         try {
 
-            let isEmpty = await PoolsModel.find({ queue: queueName });
+            let isEmpty = await ArchiveModel.find({ queue: queueName });
             let poolId = `T${new Date().getFullYear()}-${faker.datatype.number(99999)}`;
 
             if (isEmpty.length === 0) {
@@ -61,7 +61,7 @@ class PoolsService {
             }
             else {
 
-                let max = await PoolsModel.find({ queue: queueName }).sort({ ticket: -1 }).limit(1);
+                let max = await ArchiveModel.find({ queue: queueName }).sort({ ticket: -1 }).limit(1);
                 let maxNum = max[0].ticket;
 
                 let tickets = new PoolsModel({
