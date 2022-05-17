@@ -44,7 +44,7 @@ export default async function connectToDatabase(): Promise<boolean> {
 		);
 	}
 
-	const mongodbUri = `${process.env.MONGO_KEY}`;
+	const mongodbUri = `mongodb://${DB_HOST}:${DB_NAME}` || `${process.env.MONGO_KEY}`;
 
 	console.log(
 		`Connecting to the MongoDB database at: mongodb://${DB_HOST}:${DB_PORT}`

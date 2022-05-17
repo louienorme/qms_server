@@ -6,6 +6,9 @@ const PoolSchema: Schema = new Schema(
         poolId: {
             type: String
         },
+        order: {
+            type: Number
+        },
         ticket: {
             type: Number
         },
