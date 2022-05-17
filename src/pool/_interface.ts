@@ -2,6 +2,7 @@ import { Document } from "mongoose";
 
 export default interface IPool extends Document {
     poolId: String;
+    order: number;
     ticket: number;
     user: String;
     contact: String;
