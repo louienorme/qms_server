@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 // Models
 import { PoolsModel } from ".";
 import { WindowAccountsModel } from '../accounts';
-import ArchiveModel from '../archive/model';
+import { ArchiveModel } from '../archive';
 import { QueueModel } from '../queue';
 
 import AuthService from '../auth/service';
@@ -33,6 +33,7 @@ class PoolsService {
                 let ticketOne = new PoolsModel({
                     poolId,
                     ticket: 1,
+                    order: 1,
                     queue: queueName,
                     contact: body.contact,
                     user: '',
@@ -63,9 +64,12 @@ class PoolsService {
 
                 let max = await ArchiveModel.find({ queue: queueName }).sort({ ticket: -1 }).limit(1);
                 let maxNum = max[0].ticket;
+                let order = await PoolsModel.find({ queue: queueName }).sort({ order: -1 }).limit(1);
+                let orderMax = order[0].order;
 
                 let tickets = new PoolsModel({
                     poolId,
+                    order: orderMax + 1,
                     ticket: maxNum + 1,
                     queue: queueName,
                     user: '',
@@ -142,11 +146,12 @@ class PoolsService {
                     station: details.station, 
                     queue: details.queueName 
                 }
-            ).sort({ ticket: 1 }).limit(1);
+            ).sort({ order: 1 }).limit(1);
             
             // Update New Ticket Status
             let newTicket = {
                 poolId: getTicket[0].poolId,
+                order: getTicket[0].order,
                 ticket: getTicket[0].ticket,
                 user: getTicket[0].user,
                 contact: getTicket[0].contact,
@@ -220,6 +225,7 @@ class PoolsService {
                 // Update New Ticket Status
                 let newTicket = {
                     poolId: ticket.poolId,
+                    order: ticket.order,
                     ticket: ticket.ticket,
                     user: ticket.user,
                     contact: ticket.contact,
@@ -277,9 +283,14 @@ class PoolsService {
             // Get Ticket Details
             let ticket: any = await PoolsModel.findById({ _id: details.id });
             
+            // Return to stack 
+            let order = await PoolsModel.find({ queue: details.queueName }).sort({ order: -1 }).limit(1);
+            let orderMax = order[0].order;
+            
             // Update New Ticket Status
             let newTicket = {
                 poolId: ticket.poolId,
+                order: orderMax + 1,
                 ticket: ticket.ticket,
                 user: ticket.user,
                 contact: ticket.contact,
@@ -345,7 +356,7 @@ class PoolsService {
 
         try {
 
-            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting'});
+            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting'}).sort("order");
 
             return { success: true, data: tickets, code: 200 }
         } catch (err) {
