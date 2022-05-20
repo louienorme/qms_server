@@ -9,7 +9,7 @@ const mongooseConnector = async (
         useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useFindAndModify: false,
-		useCreateIndex: true,
+		authSource: "admin"
     };
 
     while (!connected) {
@@ -19,7 +19,8 @@ const mongooseConnector = async (
                 connected = true;
                 console.log("Successfully connected to the database.\n\n");
             })
-            .catch(() => {
+            .catch((err) => {
+				console.log(err);
                 console.error("We have a problem connecting to the database, Retrying...");
             }); 
     }
