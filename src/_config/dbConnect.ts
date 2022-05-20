@@ -1,9 +1,7 @@
 import mongoose from 'mongoose'
 
 const mongooseConnector = async (
-    mongodbUri: string,
-    user: string,
-    pass: string
+    mongodbUri: string
 ) => {
     let connected = false;
 
@@ -12,9 +10,6 @@ const mongooseConnector = async (
 		useUnifiedTopology: true,
 		useFindAndModify: false,
 		useCreateIndex: true,
-		authSource: "admin",
-		user,
-		pass,
     };
 
     while (!connected) {
@@ -44,11 +39,11 @@ export default async function connectToDatabase(): Promise<boolean> {
 		);
 	}
 
-	const mongodbUri = `mongodb://${DB_HOST}:${DB_NAME}` || `${process.env.MONGO_KEY}`;
+	const mongodbUri = `${process.env.MONGO_KEY}`;
 
 	console.log(
-		`Connecting to the MongoDB database at: mongodb://${DB_HOST}:${DB_PORT}`
+		`Connecting to the MongoDB database at: mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`
 	);
 
-	return await mongooseConnector(mongodbUri, DB_USER, DB_PASS);
+	return await mongooseConnector(mongodbUri);
 }
