@@ -29,7 +29,7 @@ class PoolsService {
 
             let poolId = `T${new Date().getFullYear()}-${faker.datatype.number(99999)}`;
 
-            if (isEmpty.length === 0 || isEmptyPool.length === 0) {
+            if (isEmpty.length === 0) {
 
                 let ticketOne = new PoolsModel({
                     poolId,
@@ -68,7 +68,7 @@ class PoolsService {
                 
                 let orderMax = 0;
 
-                if (isEmptyPool) {
+                if (isEmptyPool.length !== 0) {
                     let order = await PoolsModel.find({ queue: queueName }).sort({ order: -1 }).limit(1);
                     orderMax = order[0].order;
                 } 
@@ -413,7 +413,6 @@ class PoolsService {
 
                 windowStatus.push(stat)
             }
-
 
             return { success: true, data: windowStatus, code: 200 }
         } catch (err) {
