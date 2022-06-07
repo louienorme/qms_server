@@ -29,10 +29,6 @@ class ArchiveService {
 
     async getStationOneData (info: any) {
 
-        let isEmpty = await PoolsModel.find({ queue: info.queueName });
-
-        if (isEmpty.length === 0) return { success: true, message: 'Pools is Empty!', code: 200 }
-
         try {  
 
             let ticketCount = await ArchiveModel.distinct('ticket').find({ queue: info.queueName }).sort({ ticket: -1 }).limit(1);
@@ -40,7 +36,7 @@ class ArchiveService {
             let numbersCreated = await ArchiveModel.distinct('ticket').find({ queue: info.queueName, createdBy: info._id, action: 'created' });
             let recentNumbers = await ArchiveModel.distinct('ticket').find({ queue: info.queueName, createdBy: info._id, action: 'created' }).sort({ ticket: -1 }).limit(5);
 
-            const response = {
+            const response: any = {
                 ticketCount,
                 lastNumberCreated,
                 numberCount: numbersCreated.length,

@@ -23,9 +23,10 @@ class PoolsService {
 
     async createNumber(queueName: string, body: any) {
 
+        let isEmpty = await ArchiveModel.find({ queue: queueName });
+        let isEmptyPool = await PoolsModel.find({ queue: queueName });
         try {
 
-            let isEmpty = await ArchiveModel.find({ queue: queueName });
             let poolId = `T${new Date().getFullYear()}-${faker.datatype.number(99999)}`;
 
             if (isEmpty.length === 0) {
@@ -64,8 +65,13 @@ class PoolsService {
 
                 let max = await ArchiveModel.find({ queue: queueName }).sort({ ticket: -1 }).limit(1);
                 let maxNum = max[0].ticket;
-                let order = await PoolsModel.find({ queue: queueName }).sort({ order: -1 }).limit(1);
-                let orderMax = order[0].order;
+                
+                let orderMax = 0;
+
+                if (isEmptyPool.length !== 0) {
+                    let order = await PoolsModel.find({ queue: queueName }).sort({ order: -1 }).limit(1);
+                    orderMax = order[0].order;
+                } 
 
                 let tickets = new PoolsModel({
                     poolId,
@@ -407,7 +413,6 @@ class PoolsService {
 
                 windowStatus.push(stat)
             }
-
 
             return { success: true, data: windowStatus, code: 200 }
         } catch (err) {
