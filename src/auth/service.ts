@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import faker from 'faker';
 const sgMail = require('@sendgrid/mail');
 
-const client = require('twilio')('AC07a53648f130e426823985b9ea8b014b', '7ec34e8f9c3ba3d918d9031dfd9cdaea');
 // Models
 import { AdminModel, FlashboardModel, WindowAccountsModel } from '../accounts';
 import ArchiveModel from '../archive/model'
@@ -13,6 +12,8 @@ import QueueModel from '../queue/model'
 import { DateTime, Duration } from 'luxon';
 
 dotenv.config();
+
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 /**
  * Module Auth
@@ -161,7 +162,7 @@ class AuthService {
         try{
             client.messages.create({
                 body: info.text,
-                from: '+19803032319',
+                from: process.env.TWILIO_NUMBER,
                 to: info.contact
               })
             return { success: true, code: 201, message: 'Text Sent Successfully' };
