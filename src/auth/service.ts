@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import bscryptjs from 'bcryptjs';
 import dotenv from 'dotenv';
 import faker from 'faker';
+const sgMail = require('@sendgrid/mail');
+
 // Models
 import { AdminModel, FlashboardModel, WindowAccountsModel } from '../accounts';
 import ArchiveModel from '../archive/model'
@@ -11,7 +13,6 @@ import { DateTime, Duration } from 'luxon';
 
 dotenv.config();
 
-const sgMail = require('@sendgrid/mail');
 const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 /**
