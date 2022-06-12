@@ -23,8 +23,8 @@ class PoolsService {
 
     async createNumber(queueName: string, body: any) {
 
-        let isEmpty = await ArchiveModel.find({ queue: queueName }).lean();
-        let isEmptyPool = await PoolsModel.find({ queue: queueName }).lean();
+        let isEmpty = await ArchiveModel.find({ queue: queueName });
+        let isEmptyPool = await PoolsModel.find({ queue: queueName });
         try {
 
             let poolId = `T${new Date().getFullYear()}-${faker.datatype.number(99999)}`;
@@ -63,13 +63,13 @@ class PoolsService {
             }
             else {
 
-                let max = await ArchiveModel.find({ queue: queueName }).sort({ ticket: -1 }).limit(1).lean();
+                let max = await ArchiveModel.find({ queue: queueName }).sort({ ticket: -1 }).limit(1);
                 let maxNum = max[0].ticket;
                 
                 let orderMax = 0;
 
                 if (isEmptyPool.length !== 0) {
-                    let order = await PoolsModel.find({ queue: queueName }).sort({ order: -1 }).limit(1).lean();
+                    let order = await PoolsModel.find({ queue: queueName }).sort({ order: -1 }).limit(1);
                     orderMax = order[0].order;
                 } 
 
@@ -119,7 +119,7 @@ class PoolsService {
                 window: details.window,
                 status: 'transacting'
             }
-        ).lean();
+        );
 
         if (isFilled.length > 0 ) return { success: false, message: 'Window is currently transacting', code: 400 };
 
@@ -129,7 +129,7 @@ class PoolsService {
                 station: details.station, 
                 window: 0 
             }
-        ).lean();
+        );
 
         if (isEmpty.length === 0 ) return { success: false, data: [], message: 'The Pool is empty', code: 400 };
 
@@ -152,7 +152,7 @@ class PoolsService {
                     station: details.station, 
                     queue: details.queueName 
                 }
-            ).sort({ order: 1 }).limit(1).lean();
+            ).sort({ order: 1 }).limit(1);
             
             // Update New Ticket Status
             let newTicket = {
@@ -290,7 +290,7 @@ class PoolsService {
             let ticket: any = await PoolsModel.findById({ _id: details.id });
             
             // Return to stack 
-            let order = await PoolsModel.find({ queue: details.queueName }).sort({ order: -1 }).limit(1).lean();
+            let order = await PoolsModel.find({ queue: details.queueName }).sort({ order: -1 }).limit(1);
             let orderMax = order[0].order;
             
             // Update New Ticket Status
