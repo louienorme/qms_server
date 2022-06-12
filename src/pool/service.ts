@@ -119,7 +119,7 @@ class PoolsService {
                 window: details.window,
                 status: 'transacting'
             }
-        );
+        ).limit(5);
 
         if (isFilled.length > 0 ) return { success: false, message: 'Window is currently transacting', code: 400 };
 
@@ -129,7 +129,7 @@ class PoolsService {
                 station: details.station, 
                 window: 0 
             }
-        );
+        ).limit(5);
 
         if (isEmpty.length === 0 ) return { success: false, data: [], message: 'The Pool is empty', code: 400 };
 
@@ -356,13 +356,13 @@ class PoolsService {
 
     async getTickets (details: any) {
 
-        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting' });
+        let isEmpty = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting' }).limit(5);
         
         if (isEmpty.length === 0) return { success: true, data: [], message: 'The Pool is empty', code: 200 }
 
         try {
 
-            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting'}).sort("order");
+            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station, status: 'waiting'}).sort("order").limit(5);
 
             return { success: true, data: tickets, code: 200 }
         } catch (err) {
@@ -380,8 +380,8 @@ class PoolsService {
 
             let windowStatus: any = [];
 
-            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station,});
-            let windows = await WindowAccountsModel.find({ queueName: details.queueName, station: details.station });
+            let tickets = await PoolsModel.find({ queue: details.queueName, station: details.station,}).limit(5);
+            let windows = await WindowAccountsModel.find({ queueName: details.queueName, station: details.station }).limit(5);
 
             for( let i = 0; i < windows.length; i++ ) {
                 let number = 0;
