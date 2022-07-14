@@ -192,7 +192,7 @@ class PoolsService {
 
             let sendText = {
                 contact: getTicket[0].contact,
-                text: `Greetings, We would like to notify you that your number is currently being served at SGSP Cashier's Office. We are on a PILOT TESTING. Thank you for your cooperation. Keep safe Genevievian!`
+                text: `Greetings, We would like to notify you that your number is currently being served at SGSP Cashier's Office. We are on a BETA TESTING. Thank you for your cooperation. Keep safe Genevievian!`
             }
 
             authService.sendText(sendText)
