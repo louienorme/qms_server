@@ -88,6 +88,11 @@ class AccountService {
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 };
 
+        // Find for a duplicate account
+        let isExistingEmail = await AdminModel.find({ contact: { email: body.contact.email } });
+        // Return if there is a duplicate
+        if (isExistingEmail.length > 0) return { success: false, message: 'Email is already used', code: 400 };
+
         try {
 
            await AdminModel.findOneAndUpdate({ _id: id }, body);   
