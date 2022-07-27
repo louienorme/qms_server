@@ -26,7 +26,11 @@ const WindowAccountSchema: Schema = new Schema(
         },
         password: {
             type: String
-        }
+        },
+        isArchived: {
+            type: Boolean,
+            default: false
+        },
     },
     {
         timestamps: true

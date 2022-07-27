@@ -27,7 +27,7 @@ class AuthService {
 
     async adminRegister(adminInfo: any) {
         // Find for a duplicate account
-        let isExisting = await AdminModel.find({ contact: { email: adminInfo.contact.email } });
+        let isExisting = await AdminModel.find({ contact: { email: adminInfo.contact.email }, isArchived: false });
         // Return if there is a duplicate
         if (isExisting.length > 0) return { success: false, message: 'Admin already exist', code: 400 };
         // Set a default password
@@ -77,20 +77,20 @@ class AuthService {
 
     async adminLogin(adminInfo: any) {
 
-        let admin = await AdminModel.find({ username: adminInfo.username });
-        let flashboard = await FlashboardModel.find({ username: adminInfo.username });
-        let window = await WindowAccountsModel.find({ username: adminInfo.username });
+        let admin = await AdminModel.find({ username: adminInfo.username, isArchived: false });
+        let flashboard = await FlashboardModel.find({ username: adminInfo.username, isArchived: false });
+        let window = await WindowAccountsModel.find({ username: adminInfo.username, isArchived: false });
 
         let account: any;
 
         if(admin.length > 0) {
-            account = await AdminModel.findOne({ username: adminInfo.username });
+            account = await AdminModel.findOne({ username: adminInfo.username, isArchived: false });
         }
         else if (flashboard.length > 0) {
-            account = await FlashboardModel.findOne({ username: adminInfo.username });
+            account = await FlashboardModel.findOne({ username: adminInfo.username, isArchived: false });
         }
         else if (window.length > 0) {
-            account = await WindowAccountsModel.findOne({ username: adminInfo.username });
+            account = await WindowAccountsModel.findOne({ username: adminInfo.username, isArchived: false });
         } 
         else {
             return { success: false, message: 'Username does not exist', code: 400 };

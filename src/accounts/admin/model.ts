@@ -27,7 +27,11 @@ const AdminSchema: Schema = new Schema(
         password: {
             type: String
         },
-        permissions: [{ type: Schema.Types.Mixed }]
+        permissions: [{ type: Schema.Types.Mixed }],
+        isArchived: {
+            type: Boolean,
+            default: false
+        },
     },
     {
         timestamps: true
