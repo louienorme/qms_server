@@ -9,6 +9,7 @@ export default interface IWindowAccount extends Document {
     window: Number;
     username: String;
     password: String;
+    isArchived: boolean;
 }
 
 /** Status works differently for this interface

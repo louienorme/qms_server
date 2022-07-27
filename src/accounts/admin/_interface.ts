@@ -16,4 +16,5 @@ export default interface IAdmin extends Document {
     username: String;
     password: String;
     permissions: Array<any>;
+    isArchived: boolean;
 }

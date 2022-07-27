@@ -9,7 +9,7 @@
     "start:prod": "node -r ts-node/register/transpile-only -r tsconfig-paths/register ./build/src/server.js",
     "build": "tsc",
     "seed": "ts-node -r tsconfig-paths/register bin/seed.ts",
-    "seed:safe": "ts-node -r tsconfig-paths/register bin/seed:safe.ts"
+    "seed:safe": "ts-node -r tsconfig-paths/register bin/seed-safe.ts"
   },
   "repository": {
     "type": "git",

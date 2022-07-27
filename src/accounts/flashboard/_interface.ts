@@ -8,4 +8,5 @@ export default interface IFlashboard extends Document {
     station: number;
     username: String;
     password: String;
+    isArchived: boolean;
 }

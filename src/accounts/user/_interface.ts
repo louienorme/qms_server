@@ -13,4 +13,5 @@ export default interface IUser extends Document {
     };
     username: String;
     password: String;
+    isArchived: boolean;
 }

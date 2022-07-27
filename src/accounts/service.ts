@@ -19,13 +19,13 @@ class AccountService {
 
     async getAllAccounts() {
         // Find if there is any account that exists
-        let isExisting = await AdminModel.find();
+        let isExisting = await AdminModel.find({ isArchived: false });
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 };
 
         try {
 
-            let accounts = await AdminModel.find();
+            let accounts = await AdminModel.find({ isArchived: false });
             
             return { success: true, data: accounts, code: 200 }
         } catch (err) {
@@ -39,9 +39,9 @@ class AccountService {
 
             let account: any;
 
-            let admin: any = await AdminModel.find({ _id: id });
-            let flash: any = await FlashboardModel.find({ _id: id });
-            let window: any = await WindowAccountsModel.find({ _id: id });
+            let admin: any = await AdminModel.find({ _id: id, isArchived: false });
+            let flash: any = await FlashboardModel.find({ _id: id, isArchived: false });
+            let window: any = await WindowAccountsModel.find({ _id: id, isArchived: false });
 
             if(admin.length > 0) {
                 account = admin
@@ -66,13 +66,13 @@ class AccountService {
 
     async getAccounts(type: string) {
         // Find if there is any account that exists
-        let isExisting = await AdminModel.find({ type })
+        let isExisting = await AdminModel.find({ type, isArchived: false })
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 };
 
         try {
 
-            let accounts = await AdminModel.find({ type });
+            let accounts = await AdminModel.find({ type, isArchived: false });
 
             return { success: true, data: accounts, code: 200 }
         } catch (err) {
@@ -84,7 +84,7 @@ class AccountService {
 
     async updateAccounts(id: string, body: any) {
         // Find if there is any account that exists
-        let isExisting = await AdminModel.find({ _id: id })
+        let isExisting = await AdminModel.find({ _id: id, isArchived: false })
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 };
 
@@ -95,7 +95,7 @@ class AccountService {
 
         try {
 
-           await AdminModel.findOneAndUpdate({ _id: id }, body);   
+           await AdminModel.findOneAndUpdate({ _id: id, isArchived: false }, body);   
            const account = await AdminModel.findOne({ _id: id });
 
             return { success: true , data: account, message: 'Accounts successfully UPDATED', code: 200 }
@@ -110,13 +110,13 @@ class AccountService {
         // Return if none exists
         if (!isExisting) return { success: false, message: 'Queue does not exist', code: 400 };
         // Find if there is any account that exists
-        let hasAccounts = await WindowAccountsModel.find({ queueName })
+        let hasAccounts = await WindowAccountsModel.find({ queueName, isArchived: false })
         // Return if none exists
         if (!hasAccounts) return { success: false, message: 'No existing window in this queue', code: 400 };
 
         try {
 
-            let accounts = await WindowAccountsModel.find({ queueName });
+            let accounts = await WindowAccountsModel.find({ queueName, isArchived: false });
 
             return { success: true, data: accounts, code: 200 }
         } catch (err) {
@@ -127,13 +127,13 @@ class AccountService {
 
     async deleteAccounts(id: string) {
         // Find if there is any account that exists
-        let isExisting = await AdminModel.findById({ _id: id })
+        let isExisting = await AdminModel.findById({ _id: id, isArchived: false },)
         // Return if none exists
         if (!isExisting) return { success: true, data: [], code: 200 };
 
         try {
 
-            await AdminModel.findByIdAndDelete({ _id: id });   
+            await AdminModel.findByIdAndUpdate({ _id: id }, { isArchived: true });   
 
             return { success: true, message: 'Accounts successfully Deleted', code: 200 }
         } catch (err) {
@@ -143,13 +143,13 @@ class AccountService {
           
     async getFlashboards(queueName: string) {
         // Find if there is any account that exists
-        let isExisting = await FlashboardModel.find({ queueName })
+        let isExisting = await FlashboardModel.find({ queueName, isArchived: false })
         // Return if none exists
         if (!isExisting) return { success: false, message: 'No Flashboard Accounts created for this queue', code: 400 };
 
         try {
 
-            let accounts = await FlashboardModel.find({ queueName });
+            let accounts = await FlashboardModel.find({ queueName, isArchived: false });
 
             return { success: true, data: accounts, code: 200 }
         } catch (err) {
