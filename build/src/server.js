@@ -58,20 +58,24 @@ var app = (0, express_1.default)();
 var server = http_1.default.createServer(app);
 // Limiters
 if (process.env.NODE_ENV === 'production') {
-    app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
+    app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
 }
 // app.use(speedLimiter)
 // app.use(rateLimiter)
 // Enables to handle json requests
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.use((0, morgan_1.default)("tiny"));
+app.use((0, morgan_1.default)('tiny'));
 // APIs
 app.use('/api/auth', routers_1.default);
 app.use('/api/accounts', routers_2.default);
 app.use('/api/queue', routers_3.default);
 app.use('/api/pools', routers_4.default);
 app.use('/api/archives', routers_5.default);
+// Test apis for webhook
+app.use('/', function (req, res, next) {
+    console.log(res);
+});
 // Run App
 var port = process.env.PORT || 5000;
 var runServer = function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -79,15 +83,13 @@ var runServer = function () { return __awaiter(void 0, void 0, void 0, function 
         switch (_a.label) {
             case 0:
                 console.clear();
-                console.log("This is the Queue Management System Backend Server by Enorme, John Loui and Ang, Eric Geo \n");
+                console.log('This is the Queue Management System Backend Server by Enorme, John Loui and Ang, Eric Geo \n');
                 return [4 /*yield*/, (0, dbConnect_1.default)()];
             case 1:
                 if (_a.sent()) {
                     server.listen(port, function () {
-                        console.log("Now running and listening at \u001B[32m".concat(process.env.NODE_ENV === "development"
-                            ? "localhost:"
-                            : "SERVER-IP").concat(port), "\x1b[0m");
-                        console.log("Server logging starts now.");
+                        console.log("Now running and listening at \u001B[32m".concat(process.env.NODE_ENV === 'development' ? 'localhost:' : 'SERVER-IP').concat(port), '\x1b[0m');
+                        console.log('Server logging starts now.');
                     });
                 }
                 return [2 /*return*/];
