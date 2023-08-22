@@ -42,7 +42,7 @@ app.use('/api/archives', archiveRoutes);
 
 // Test apis for webhook
 app.post('/webhook', (req, res, next) => {
-  console.log({ 'This is test webhook endpoint': req });
+  console.log({ 'This is test webhook endpoint': req.body.data });
 });
 
 // Run App
