@@ -73,8 +73,8 @@ app.use('/api/queue', routers_3.default);
 app.use('/api/pools', routers_4.default);
 app.use('/api/archives', routers_5.default);
 // Test apis for webhook
-app.use('/webhook', function (req, res, next) {
-    console.log({ 'This is test webhook endpoint': res.data.data });
+app.post('/webhook', function (req, res, next) {
+    console.log({ 'This is test webhook endpoint': req });
 });
 // Run App
 var port = process.env.PORT || 5000;
