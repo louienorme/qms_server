@@ -41,8 +41,8 @@ app.use('/api/pools', poolRoutes);
 app.use('/api/archives', archiveRoutes);
 
 // Test apis for webhook
-app.use('/webhook', (req, res: any, next) => {
-  console.log({ 'This is test webhook endpoint': res.data.data });
+app.post('/webhook', (req, res, next) => {
+  console.log({ 'This is test webhook endpoint': req });
 });
 
 // Run App
