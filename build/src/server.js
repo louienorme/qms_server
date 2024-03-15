@@ -73,6 +73,9 @@ app.use('/api/queue', routers_3.default);
 app.use('/api/pools', routers_4.default);
 app.use('/api/archives', routers_5.default);
 // Test apis for webhook
+app.get('/webhook', function (req, res, next) {
+    console.log({ 'This is test webhook endpoint': req.body.data });
+});
 app.post('/webhook', function (req, res, next) {
     console.log({ 'This is test webhook endpoint': req.body.data });
 });
